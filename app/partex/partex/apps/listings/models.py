@@ -1,6 +1,6 @@
 from django.db import models
 from ..apps.users import User
-from ..apps.reviews import review
+from ..apps.reviews import ListingReview
 
 # Create your models here.
 
@@ -14,4 +14,5 @@ class Listing(models.Model)
     description = models.TextField(blank=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     base_item = models.ForeignKey(AbstractItem, blank=True)
+    reviews = models.ManyToMany(ListingReview)
 
