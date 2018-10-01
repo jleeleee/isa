@@ -7,10 +7,10 @@ APP=partex
 case $1 in
     "django")
         docker run -it --name web -p 8000:8000 --link mysql:db -v $PWD/app:/app tp33/django \
-            mod_wsgi-express start-server --reload-on-changes --working-directory /app/$APP /app/$APP/$APP/wsgi.py
+            # mod_wsgi-express start-server --reload-on-changes --working-directory /app/$APP /app/$APP/$APP/wsgi.py
         ;;
     "django-cli")
-        docker exec -it --name web /bin/bash
+        docker exec -it web /bin/bash
         ;;
     "mysql")
         docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v db:/var/lib/mysql mysql:5.7.23
