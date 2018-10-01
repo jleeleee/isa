@@ -6,13 +6,12 @@ from ..apps.listings.models import Listing
 # Create your models here.
 class Review(models.Model):
     title = models.CharField(max_length=300)
-    rating = models.IntegerField()
+    rating = models.IntegerField(min_value=0,max_value=5)
     body = models.TextField()
+    author = models.ForeignKey(User)
 
 class UserReview(Review):
-    author = models.ForeignKey(User)
     subject = models.ForeignKey(User)
 
 class ListingReview(Review):
-    author = models.ForeignKey(User)
     subject = models.ForeignKey(Listing)
