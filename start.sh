@@ -3,13 +3,21 @@
 pushd $(dirname ${BASH_SOURCE[0]}) > /dev/null
 
 APP=partex
+CMDS="Available commands:\n
+django\n
+django-cli\n
+mysql\n
+mysql-cli\n
+pull\n
+stopdb
+"
 
 case $1 in
     "django")
         docker-compose up
         ;;
     "django-cli")
-        docker exec -it web /bin/bash
+        docker exec -it partex_web_1 /bin/bash
         ;;
     "mysql")
         docker run --name mysql -d --env-file db/vars.env -v db:/var/lib/mysql mysql:5.7.23
@@ -25,7 +33,7 @@ case $1 in
         docker rm mysql | sed 's/^/Removed: /g'
         ;;
     *)
-        echo "Help"
+        echo -e $CMDS
         ;;
 esac
 
