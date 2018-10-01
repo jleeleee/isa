@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 from .apps.users import urls as users
-from .apps.parts import urls as parts
+from .apps.listings import urls as listings
+from .app.reviews import urls as reviews
 
 apipatterns = [
     path('users/', include(users)),
-    path('parts/', include(parts))
+    path('listings/', include(listings))
+    path('reviews/', include(reviews))
 ]
 
 urlpatterns = [
