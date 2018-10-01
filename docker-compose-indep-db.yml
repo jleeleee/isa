@@ -3,10 +3,16 @@
 version: '3'
 
 services:
+  db:
+    image: mysql:5.7.23
+    env_file:
+      - db/vars.env
+    volumes:
+      - db:/var/lib/mysql
   web:
     image: tp33/django
-    external_links:
-      - db:mysql
+    links:
+      - db:db
     volumes:
       - ./app:/app
     ports:
@@ -14,3 +20,6 @@ services:
     command:
       # bash -c "/usr/bin/env python3 /app/partex/manage.py runserver 0.0.0.0:8000"
       bash -c "mod_wsgi-express start-server --reload-on-changes --working-directory /app/partex /app/partex/partex/wsgi.py"
+
+volumes:
+  db:
