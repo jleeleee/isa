@@ -12,5 +12,5 @@ services:
     ports:
       - "8001:8000"
     command:
-      # bash -c "/usr/bin/env python3 /app/partex/manage.py runserver 0.0.0.0:8000"
-      bash -c "mod_wsgi-express start-server --reload-on-changes --working-directory /app/partex /app/partex/partex/wsgi.py"
+      # bash -c "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+      bash -c "mod_wsgi-express start-server --reload-on-changes --working-directory /app /app/partex/wsgi.py"

@@ -2,7 +2,6 @@
 
 pushd $(dirname ${BASH_SOURCE[0]}) > /dev/null
 
-APP=partex
 CMDS="Available commands:\n
 django\n
 django-cli\n
