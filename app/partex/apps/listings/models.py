@@ -7,8 +7,9 @@ class AbstractItem(models.Model):
     # Back Accessors:
     #   reviews
     #   listings
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     generic_description = models.TextField(blank=True)
+    #reference_image = models.ImageField(upload_to='ref_images/{}/'.format(name), blank=True)
 
     def __str__(self):
         return self.name
