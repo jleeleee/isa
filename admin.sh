@@ -29,6 +29,10 @@ case $1 in
         docker-compose exec web /bin/bash -c \
             "python manage.py makemigrations"
         ;;
+    "makedb")
+        docker exec -it mysql /bin/bash -c \
+            "mysql -uroot -p'\$3cureUS' -h localhost -e\"create user 'www'@'%' identified by '\$3cureUS';\""
+        ;;
     "resetdb")
         docker exec -it mysql /bin/bash -c \
             "mysql -uroot -p'\$3cureUS' -h localhost -e\"$RESETDB\""
