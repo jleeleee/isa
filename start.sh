@@ -27,6 +27,9 @@ case $1 in
     "pull")
         docker pull tp33/django
         ;;
+    "stopweb")
+        docker-compose rm web
+        ;;
     "stopdb")
         docker stop mysql | sed 's/^/Stopped: /g'
         docker rm mysql | sed 's/^/Removed: /g'
