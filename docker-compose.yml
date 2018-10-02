@@ -5,7 +5,7 @@ version: '3'
 services:
   web:
     image: tp33/django
-    network_mode: bridge
+    network_mode: default
     external_links:
       - mysql:db
     volumes:
@@ -14,6 +14,4 @@ services:
       - "8001:8000"
     command:
       # bash -c "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
-      bash -c "python /app/manage.py makemigrations &&
-               python /app/manage.py migrate &&
-               mod_wsgi-express start-server --reload-on-changes --working-directory /app /app/partex/wsgi.py"
+      bash -c "mod_wsgi-express start-server --reload-on-changes --working-directory /app /app/partex/wsgi.py"

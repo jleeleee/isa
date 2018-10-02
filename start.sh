@@ -23,7 +23,8 @@ case $1 in
         docker run --name mysql -d --env-file app/partex/db/vars.env -v db:/var/lib/mysql mysql:5.7.23
         ;;
     "mysql-cli")
-        docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.23 bash
+        docker exec -it mysql /bin/bash -c \
+            "mysql -uroot -p'\$3cureUS' -h localhost"
         ;;
     "pull")
         docker pull tp33/django
