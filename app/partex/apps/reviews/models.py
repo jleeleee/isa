@@ -16,7 +16,6 @@ class Review(models.Model):
 class UserReview(Review):
     subject = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
 
-
     def __str__(self):
         return self.title
 

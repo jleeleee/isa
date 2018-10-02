@@ -7,6 +7,7 @@ class User(AbstractBaseUser):
     # Back Accessors:
     #   reviews
     #   authored_reviews
+    #   listings
     username = models.CharField(max_length=40, unique=True)
 
     first_name = models.CharField(max_length=100)
@@ -19,7 +20,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'username'
 
     def average_reviews(self):
-        reviews.all().aggregate(Avg('rating'))
+        return reviews.all().aggregate(Avg('rating'))
 
     def __str__(self):
         return self.username
