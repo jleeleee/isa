@@ -20,7 +20,7 @@ case $1 in
         docker-compose exec web /bin/bash
         ;;
     "mysql")
-        docker run --name mysql -d --env-file db/vars.env -v db:/var/lib/mysql mysql:5.7.23
+        docker run --name mysql -d --env-file app/partex/db/vars.env -v db:/var/lib/mysql mysql:5.7.23
         ;;
     "mysql-cli")
         docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.23 bash
