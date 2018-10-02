@@ -17,7 +17,7 @@ case $1 in
         docker-compose up
         ;;
     "django-cli")
-        docker exec -it partex_web_1 /bin/bash
+        docker-compose exec web /bin/bash
         ;;
     "mysql")
         docker run --name mysql -d --env-file db/vars.env -v db:/var/lib/mysql mysql:5.7.23
