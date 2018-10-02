@@ -11,6 +11,8 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True)
     email = models.CharField(max_length=100, unique=True)
 
+    EXPOSED_FIELDS = ["username", "first_name", "last_name", "date_created"]
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
@@ -25,3 +27,6 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.username
+
+    def get_dict(self):
+        return { d: getattr(self, d) for d in User.EXPOSED_FIELDS }
