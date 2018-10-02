@@ -6,7 +6,7 @@ services:
   db:
     image: mysql:5.7.23
     env_file:
-      - db/vars.env
+      - app/partex/db/vars.env
     volumes:
       - db:/var/lib/mysql
   web:

@@ -9,6 +9,7 @@ mysql\n
 mysql-cli\n
 pull\n
 stopdb
+stopweb
 "
 
 case $1 in
