@@ -1,7 +1,7 @@
 from django.db import models
 
 from ..users.models import User
-from ..listings.models import Listing
+from ..listings.models import Listing, AbstractItem
 
 # Create your models here.
 class Review(models.Model):
@@ -19,8 +19,8 @@ class UserReview(Review):
     def __str__(self):
         return self.title
 
-class ListingReview(Review):
-    subject = models.ForeignKey(Listing, on_delete=models.CASCADE)
+class ItemReview(Review):
+    subject = models.ForeignKey(AbstractItem, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

@@ -5,6 +5,7 @@ from ..users.models import User
 
 class AbstractItem(models.Model):
     name = models.CharField(max_length=200)
+    reviews = models.ManyToManyField("reviews.ItemReview")
 
     def __str__(self):
         return self.name
@@ -16,7 +17,6 @@ class Listing(models.Model):
     description = models.TextField(blank=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     base_item = models.ForeignKey(AbstractItem, blank=True, on_delete=models.CASCADE)
-    reviews = models.ManyToManyField("reviews.ListingReview")
 
     def __str__(self):
         return self.name
