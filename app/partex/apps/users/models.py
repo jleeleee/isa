@@ -4,7 +4,9 @@ from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
 
 class User(AbstractBaseUser):
-    reviews = models.ManyToManyField("reviews.UserReview")
+    # Back Accessors:
+    #   reviews
+    #   authored_reviews
     username = models.CharField(max_length=40, unique=True)
 
     first_name = models.CharField(max_length=100)

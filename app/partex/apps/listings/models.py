@@ -4,8 +4,11 @@ from ..users.models import User
 # Create your models here.
 
 class AbstractItem(models.Model):
+    # Back Accessors:
+    #   reviews
+    #   listings
     name = models.CharField(max_length=200)
-    reviews = models.ManyToManyField("reviews.ItemReview")
+    generic_description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -16,7 +19,7 @@ class Listing(models.Model):
     status = models.BooleanField(default=True)
     description = models.TextField(blank=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
-    base_item = models.ForeignKey(AbstractItem, blank=True, on_delete=models.CASCADE)
+    base_item = models.ForeignKey(AbstractItem, blank=True, on_delete=models.CASCADE, related_name="listings")
 
     def __str__(self):
         return self.name
