@@ -5,7 +5,7 @@ from ..listings.models import Listing, AbstractItem
 
 # Create your models here.
 class Review(models.Model):
-    EXPOSED_FIELDS = ["title", "rating", "body", "author", "date_created"]
+    EXPOSED_FIELDS = ["id", "title", "rating", "body", "author", "date_created"]
     title = models.CharField(max_length=300)
     rating = models.IntegerField()
     body = models.TextField()
