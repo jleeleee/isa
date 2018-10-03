@@ -1,1 +1,57 @@
-[{"model": "listings.abstractitem", "pk": 1, "fields": {"name": "nVidia GTX 1080", "generic_description": "Flagship nVidia GPU"}}, {"model": "listings.abstractitem", "pk": 2, "fields": {"name": "Intel core i5 7600K", "generic_description": "Unlocked performance processor"}}, {"model": "listings.listing", "pk": 1, "fields": {"name": "GTX 1080", "price": "399.99", "status": true, "description": "GTX 1080 for sale", "seller": 1, "base_item": 1}}, {"model": "listings.listing", "pk": 2, "fields": {"name": "Core i5 7600K on sale!", "price": "199.99", "status": true, "description": "Selling CPU for food", "seller": 4, "base_item": 2}}, {"model": "listings.listing", "pk": 3, "fields": {"name": "7600K on the cheap", "price": "100.00", "status": true, "description": "Switched to Ryzen", "seller": 3, "base_item": 2}}]
+[
+   {
+      "model":"listings.abstractitem",
+      "pk":1,
+      "fields":{
+         "name":"nVidia GTX 1080",
+         "generic_description":"Flagship nVidia GPU"
+      }
+   },
+   {
+      "model":"listings.abstractitem",
+      "pk":2,
+      "fields":{
+         "name":"Intel core i5 7600K",
+         "generic_description":"Unlocked performance processor"
+      }
+   },
+   {
+      "model":"listings.listing",
+      "pk":1,
+      "fields":{
+         "name":"GTX 1080",
+         "price":"399.99",
+         "status":true,
+         "description":"GTX 1080 for sale",
+         "seller":1,
+         "base_item":1,
+         "date_created":"2018-10-02"
+      }
+   },
+   {
+      "model":"listings.listing",
+      "pk":2,
+      "fields":{
+         "name":"Core i5 7600K on sale!",
+         "price":"199.99",
+         "status":true,
+         "description":"Selling CPU for food",
+         "seller":4,
+         "base_item":2,
+         "date_created":"2018-10-02"
+      }
+   },
+   {
+      "model":"listings.listing",
+      "pk":3,
+      "fields":{
+         "name":"7600K on the cheap",
+         "price":"100.00",
+         "status":true,
+         "description":"Switched to Ryzen",
+         "seller":3,
+         "base_item":2,
+         "date_created":"2018-10-02"
+      }
+   }
+]
