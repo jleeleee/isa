@@ -36,9 +36,9 @@ def user_create(request):
             title = request.POST["title"],
             rating = request.POST["rating"],
             body = request.POST["body"],
-            date_created = request.POST["date_created"]
+            date_created = request.POST["date_created"],
             author = request.POST["author"],
-            subject = request.POST["subject"],
+            subject = request.POST["subject"]
         )
     r.save()
     return JsonResponse({
@@ -69,9 +69,9 @@ def user_update(request, id_):
     r.title = request.POST["title"],
     r.rating = request.POST["rating"],
     r.body = request.POST["body"],
-    r.date_created = request.POST["date_created"]
+    r.date_created = request.POST["date_created"],
     r.author = request.POST["author"],
-    r.subject = request.POST["subject"],
+    r.subject = request.POST["subject"]
 
     r.save()
 
@@ -110,9 +110,9 @@ def item_create(request):
             title = request.POST["title"],
             rating = request.POST["rating"],
             body = request.POST["body"],
-            date_created = request.POST["date_created"]
+            date_created = request.POST["date_created"],
             author = request.POST["author"],
-            subject = request.POST["subject"],
+            subject = request.POST["subject"]
         )
     r.save()
     return JsonResponse({
@@ -140,12 +140,12 @@ def item_delete(request, id_):
 def item_update(request, id_):
     r = get_object_or_404(ItemReview, id=id_)
 
-    r.title = request.POST["title"],
-    r.rating = request.POST["rating"],
-    r.body = request.POST["body"],
+    r.title = request.POST["title"]
+    r.rating = request.POST["rating"]
+    r.body = request.POST["body"]
     r.date_created = request.POST["date_created"]
-    r.author = request.POST["author"],
-    r.subject = request.POST["subject"],
+    r.author = request.POST["author"]
+    r.subject = request.POST["subject"]
 
     r.save()
 
