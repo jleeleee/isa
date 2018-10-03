@@ -18,11 +18,11 @@ def index(request):
     })
 
 def info(request, id_):
-    listing = get_object_or_404(Listing, id=id_)
+    lst = get_object_or_404(Listing, id=id_)
 
     return JsonResponse({
         "ok": True,
-        "result": Listing.get_dict()
+        "result": lst.get_dict()
     })
 
 @csrf_exempt
@@ -68,9 +68,13 @@ def delete(request, id_):
 def update(request, id_):
     lst = get_object_or_404(Listing, id=id_)
 
-    for i in request.POST:
-        if i in hasattr(lst, i):
-            lst[i] = request.POST[i]
+    lst.name = request.POST.get("name", lst.name)
+    lst.price = request.POST.get("price", lst.price)
+    lst.status = request.POST.get("status", lst.status)
+    lst.description = request.POST.get("description", lst.description)
+    lst.seller = request.POST.get("seller", lst.seller)
+    lst.base_item = request.POST.get("base_item", lst.base_item)
+    lst.date_created = request.POST.get("date_created", lst.date_created)
 
     lst.save()
 
