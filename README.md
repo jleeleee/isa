@@ -16,6 +16,7 @@ You can start a database with
 ./admin.sh mysql        # Launch mysql
 ./admin.sh makedbuser   # Create user
 ./admin.sh makedb       # Create db
+```
 
 If these don't work, use the commands given in the project description.
 
