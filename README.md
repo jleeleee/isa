@@ -25,9 +25,9 @@ Many other utilities are available through `admin.sh`.
 The user microservices use these URLs:
 * /api/v1/users
 * /api/v1/users/create
-* /api/v1/users/<id>
-* /api/v1/users/<id>/update
-* /api/v1/users/<id>/delete
+* /api/v1/users/\<id\>
+* /api/v1/users/\<id\>/update
+* /api/v1/users/\<id\>/delete
 
 ## Listings
 ## Reviews

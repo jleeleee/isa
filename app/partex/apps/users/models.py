@@ -11,7 +11,7 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True)
     email = models.CharField(max_length=100, unique=True)
 
-    EXPOSED_FIELDS = ["username", "first_name", "last_name", "date_created"]
+    EXPOSED_FIELDS = ["id", "username", "first_name", "last_name", "date_created"]
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
