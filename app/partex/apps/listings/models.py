@@ -19,7 +19,7 @@ class AbstractItem(models.Model):
         return { d: getattr(self, d) for d in AbstractItem.EXPOSED_FIELDS }
 
 class Listing(models.Model):
-    EXPOSED_FIELDS = ["id", "name", "price", "status", "description", "seller", "base_item", "date_created"]
+    EXPOSED_FIELDS = ["id", "name", "price", "status", "description", "date_created"]
     name = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.BooleanField(default=True)
@@ -36,4 +36,7 @@ class Listing(models.Model):
         return self.name
 
     def get_dict(self):
-        return { d: getattr(self, d) for d in Listing.EXPOSED_FIELDS }
+        ret_dict = { d: getattr(self, d) for d in Listing.EXPOSED_FIELDS }
+        ret_dict["seller"] = self.seller.id
+        ret_dict["base_item"] = self.base_item.id
+        return ret_dict

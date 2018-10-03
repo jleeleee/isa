@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import Listing
+from ..users.models import User
 
 # Create your views here.
 
@@ -27,7 +28,7 @@ def info(request, id_):
 @csrf_exempt
 @require_http_methods(["POST"])
 def create(request):
-    required_fields = ["name", "price"]
+    required_fields = ["name", "price", "seller"]
     if any(map(lambda k: k not in request.POST, required_fields)):
         return JsonResponse({
             "ok": False,
@@ -36,7 +37,8 @@ def create(request):
 
     lst = Listing.objects.create(
         name = request.POST["name"],
-        price = request.POST["price"]
+        price = request.POST["price"],
+        seller = User.objects.get(id=request.POST["seller"])
         )
 
     lst.save()
