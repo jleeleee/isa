@@ -16,8 +16,8 @@ def index(request):
         ]
     })
 
-def info(request, id):
-    user = get_object_or_404(User, id=id)
+def info(request, id_):
+    user = get_object_or_404(User, id=id_)
 
     return JsonResponse({
         "ok": True,
@@ -54,8 +54,8 @@ def create(request):
         "result": u.get_dict()
     })
 
-def delete(request, id):
-    u = User.objects.filter(id=id)
+def delete(request, id_):
+    u = User.objects.filter(id=id_)
     if u.exists():
         user = u.first()
         user.delete()
@@ -71,8 +71,8 @@ def delete(request, id):
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def update(request, id):
-    u = get_object_or_404(User, id=id)
+def update(request, id_):
+    u = get_object_or_404(User, id=id_)
 
     u.username   = request.POST("username", u.username)
     u.first_name = request.POST("first_name", u.first_name)
