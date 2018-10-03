@@ -13,10 +13,10 @@ stopdb
 stopweb
 "
 
-RESETDB="drop database cs4501;
-create database cs4501 character set utf8;
-grant all on cs4501.* to 'www'@'%';
-"
+DROPDB="drop database cs4501;"
+CREATEDB="create database cs4501 character set utf8;
+grant all on cs4501.* to 'www'@'%';"
+CREATEUSER="create user 'www'@'%' identified by '\$3cureUS';"
 
 case $1 in
     "django")
@@ -29,13 +29,17 @@ case $1 in
         docker-compose exec web /bin/bash -c \
             "python manage.py makemigrations"
         ;;
+    "makedbuser")
+        docker exec -it mysql /bin/bash -c \
+            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$CREATEUSER\""
+        ;;
+    "dropdb")
+        docker exec -it mysql /bin/bash -c \
+            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$DROPDB\""
+        ;;
     "makedb")
         docker exec -it mysql /bin/bash -c \
-            "mysql -uroot -p'\$3cureUS' -h localhost -e\"create user 'www'@'%' identified by '\$3cureUS';\""
-        ;;
-    "resetdb")
-        docker exec -it mysql /bin/bash -c \
-            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$RESETDB\""
+            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$CREATEDB\""
         ;;
     "mysql")
         docker run --name mysql -d --env-file app/partex/db/vars.env -v db:/var/lib/mysql mysql:5.7.23
