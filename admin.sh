@@ -42,7 +42,7 @@ case $1 in
             "mysql -uroot -p'\$3cureUS' -h localhost -e\"$CREATEDB\""
         ;;
     "mysql")
-        docker run --name mysql -d --env-file app/partex/db/vars.env -v db:/var/lib/mysql mysql:5.7.23
+        docker run --name mysql -d --env-file app/partex/db/vars.env -v ~/cs4501/db:/var/lib/mysql mysql:5.7.23
         ;;
     "mysql-cli")
         docker exec -it mysql /bin/bash -c \
