@@ -18,6 +18,8 @@ create database cs4501 character set utf8;
 grant all on cs4501.* to 'www'@'%';
 "
 
+ROOTPASS='$3cureUS'
+
 case $1 in
     "django")
         docker-compose up
@@ -38,7 +40,7 @@ case $1 in
             "mysql -uroot -p'\$3cureUS' -h localhost -e\"$RESETDB\""
         ;;
     "mysql")
-        docker run --name mysql -d --env-file app/partex/db/vars.env -v db:/var/lib/mysql mysql:5.7.23
+        docker run --name mysql -d -e MYSQL_ROOT_PASSWORD="$ROOTPASS" -v db:/var/lib/mysql mysql:5.7.23
         ;;
     "mysql-cli")
         docker exec -it mysql /bin/bash -c \
