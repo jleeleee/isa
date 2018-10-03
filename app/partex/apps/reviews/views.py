@@ -25,7 +25,7 @@ def user_info(request, id_):
 @csrf_exempt
 @require_http_methods(["POST"])
 def user_create(request):
-    required_fields = ["title", "rating", "body", "author", "subject"]
+    required_fields = ["title", "rating", "body","date_created", "author", "subject"]
     if any(map(lambda k: k not in request.POST, required_fields)):
         return JsonResponse({
             "ok": False,
@@ -36,6 +36,7 @@ def user_create(request):
             title = request.POST["title"],
             rating = request.POST["rating"],
             body = request.POST["body"],
+            date_created = request.POST["date_created"]
             author = request.POST["author"],
             subject = request.POST["subject"],
         )
@@ -68,6 +69,7 @@ def user_update(request, id_):
     r.title = request.POST["title"],
     r.rating = request.POST["rating"],
     r.body = request.POST["body"],
+    r.date_created = request.POST["date_created"]
     r.author = request.POST["author"],
     r.subject = request.POST["subject"],
 
@@ -96,8 +98,8 @@ def item_info(request, id_):
 
 @csrf_exempt
 @require_http_methods(["POST"])
-def user_create(request):
-    required_fields = ["title", "rating", "body", "author", "subject"]
+def item_create(request):
+    required_fields = ["title", "rating", "body", "author", "date_created", "subject"]
     if any(map(lambda k: k not in request.POST, required_fields)):
         return JsonResponse({
             "ok": False,
@@ -108,6 +110,7 @@ def user_create(request):
             title = request.POST["title"],
             rating = request.POST["rating"],
             body = request.POST["body"],
+            date_created = request.POST["date_created"]
             author = request.POST["author"],
             subject = request.POST["subject"],
         )
@@ -140,6 +143,7 @@ def item_update(request, id_):
     r.title = request.POST["title"],
     r.rating = request.POST["rating"],
     r.body = request.POST["body"],
+    r.date_created = request.POST["date_created"]
     r.author = request.POST["author"],
     r.subject = request.POST["subject"],
 
