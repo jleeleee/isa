@@ -25,7 +25,7 @@ class Listing(models.Model):
     status = models.BooleanField(default=True)
     description = models.TextField(blank=True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="listings")
-    base_item = models.ForeignKey(AbstractItem, blank=True, on_delete=models.CASCADE, related_name="listings")
+    base_item = models.ForeignKey(AbstractItem, null=True, on_delete=models.CASCADE, related_name="listings")
 
     date_created = models.DateField(auto_now_add=True)
 
@@ -38,5 +38,6 @@ class Listing(models.Model):
     def get_dict(self):
         ret_dict = { d: getattr(self, d) for d in Listing.EXPOSED_FIELDS }
         ret_dict["seller"] = self.seller.id
-        ret_dict["base_item"] = self.base_item.id
+        if self.base_item is not None:
+            ret_dict["base_item"] = self.base_item.id
         return ret_dict
