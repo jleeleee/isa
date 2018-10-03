@@ -40,7 +40,7 @@ Parameters for create:
 
 All optional for update.
 
-## Listings
+### Listings
 The listing microservice use these URLs:
 * GET  /api/v1/listings
 * POST /api/v1/listings/create
@@ -60,7 +60,7 @@ Also available for update:
 * OPTIONAL: `status`
 * OPTIONAL: `base_item`
 
-## Reviews
+### Reviews
 The reviews microservice URLs are split for user reviews and item reviews.
 * GET  /api/v1/reviews/user
 * POST /api/v1/reviews/user/create
@@ -80,3 +80,11 @@ Parameters for create (user and item):
 * REQUIRED: `subject` - ID of the User/AbstractItem subject of the review
 
 All optional for update.
+
+## Fixtures
+Fixtures are located in `app/partex/db/fixtures` as JSON files. They can be loaded inside a Django container with
+```
+./manage.py loaddata app/partex/db/fixtures/app.json
+```
+
+Fixtures are automatically loaded when `docker-compose up` is run.
