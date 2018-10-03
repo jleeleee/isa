@@ -13,10 +13,11 @@ if a mysql database is already running.
 
 You can start a database with
 ```
-./admin.sh mysql    # Launch mysql
-./admin.sh makedb   # Create user
-./admin.sh resetdb  # Create db
-```
+./admin.sh mysql        # Launch mysql
+./admin.sh makedbuser   # Create user
+./admin.sh makedb       # Create db
+
+If these don't work, use the commands given in the project description.
 
 Many other utilities are available through `admin.sh`.
 
