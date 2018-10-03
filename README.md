@@ -25,29 +25,29 @@ Many other utilities are available through `admin.sh`.
 ### Users
 Users contain email addresses, usernames, first names, and last names.
 The user microservice use these URLs:
-* /api/v1/users
-* /api/v1/users/create
-* /api/v1/users/\<id\>
-* /api/v1/users/\<id\>/update
-* /api/v1/users/\<id\>/delete
+* GET  /api/v1/users
+* POST /api/v1/users/create
+* GET  /api/v1/users/\<id\>
+* POST /api/v1/users/\<id\>/update
+* GET  /api/v1/users/\<id\>/delete
 
 ## Listings
 The listing microservice use these URLs:
-* /api/v1/listings
-* /api/v1/listings/create
-* /api/v1/listings/\<id\>
-* /api/v1/listings/\<id\>/update
-* /api/v1/listings/\<id\>/delete
+* GET  /api/v1/listings
+* POST /api/v1/listings/create
+* GET  /api/v1/listings/\<id\>
+* POST /api/v1/listings/\<id\>/update
+* GET  /api/v1/listings/\<id\>/delete
 
 ## Reviews
 The reviews microservice URLs are split for user reviews and item reviews.
-* /api/v1/reviews/user
-* /api/v1/reviews/user/create
-* /api/v1/reviews/user/\<id\>
-* /api/v1/reviews/user/\<id\>/update
-* /api/v1/reviews/user/\<id\>/delete
-* /api/v1/reviews/item
-* /api/v1/reviews/item/create
-* /api/v1/reviews/item/\<id\>
-* /api/v1/reviews/item/\<id\>/update
-* /api/v1/reviews/item/\<id\>/delete
+* GET  /api/v1/reviews/user
+* POST /api/v1/reviews/user/create
+* GET  /api/v1/reviews/user/\<id\>
+* POST /api/v1/reviews/user/\<id\>/update
+* GET  /api/v1/reviews/user/\<id\>/delete
+* GET  /api/v1/reviews/item
+* POST /api/v1/reviews/item/create
+* GET  /api/v1/reviews/item/\<id\>
+* POST /api/v1/reviews/item/\<id\>/update
+* GET  /api/v1/reviews/item/\<id\>/delete

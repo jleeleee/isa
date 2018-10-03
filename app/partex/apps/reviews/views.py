@@ -4,7 +4,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import ItemReview, UserReview 
+from .models import ItemReview, UserReview
+from ..users.models import User
+from ..listings.models import AbstractItem
 
 # UserReview Views
 def user_index(request):
@@ -33,12 +35,30 @@ def user_create(request):
             "message": "Missing a required field: (one of {})".format(required_fields)
         })
 
+    author = User.objects.filter(id=request.POST["author"])
+    if author.exists():
+        author = author.first()
+    else:
+        return JsonResponse({
+            "ok": False,
+            "message": "Author does not exist"
+        })
+
+    subject = User.objects.filter(id=request.POST["subject"])
+    if subject.exists():
+        subject = subject.first()
+    else:
+        return JsonResponse({
+            "ok": False,
+            "message": "Subject does not exist"
+        })
+
     r = UserReview.objects.create(
             title = request.POST["title"],
             rating = request.POST["rating"],
             body = request.POST["body"],
-            author = request.POST["author"],
-            subject = request.POST["subject"]
+            author = author,
+            subject = subject
         )
     r.save()
     return JsonResponse({
@@ -66,17 +86,35 @@ def user_delete(request, id_):
 def user_update(request, id_):
     r = get_object_or_404(UserReview, id=id_)
 
-    r.title = request.POST["title"],
-    r.rating = request.POST["rating"],
-    r.body = request.POST["body"],
-    r.author = request.POST["author"],
-    r.subject = request.POST["subject"]
+    r.title = request.POST.get("title", r.title)
+    r.rating = request.POST.get("rating", r.rating)
+    r.body = request.POST.get("body", r.body)
+
+    if "author" in request.POST:
+        author = User.objects.filter(id=request.POST["author"])
+        if author.exists():
+            r.author = author.first()
+        else:
+            return JsonResponse({
+                "ok": False,
+                "message": "Author does not exist"
+            })
+
+    if "subject" in request.POST:
+        subject = User.objects.filter(id=request.POST["subject"])
+        if subject.exists():
+            r.subject = subject.first()
+        else:
+            return JsonResponse({
+                "ok": False,
+                "message": "Subject does not exist"
+            })
 
     r.save()
 
     return JsonResponse({
         "ok": True,
-        "result": u.get_dict()
+        "result": r.get_dict()
     })
 
 
@@ -107,12 +145,30 @@ def item_create(request):
             "message": "Missing a required field: (one of {})".format(required_fields)
         })
 
+    author = User.objects.filter(id=request.POST["author"])
+    if author.exists():
+        author = author.first()
+    else:
+        return JsonResponse({
+            "ok": False,
+            "message": "Author does not exist"
+        })
+
+    subject = AbstractItem.objects.filter(id=request.POST["subject"])
+    if subject.exists():
+        subject = subject.first()
+    else:
+        return JsonResponse({
+            "ok": False,
+            "message": "Subject does not exist"
+        })
+
     r = ItemReview.objects.create(
             title = request.POST["title"],
             rating = request.POST["rating"],
             body = request.POST["body"],
-            author = request.POST["author"],
-            subject = request.POST["subject"]
+            author = author,
+            subject = subject
         )
     r.save()
     return JsonResponse({
@@ -140,15 +196,33 @@ def item_delete(request, id_):
 def item_update(request, id_):
     r = get_object_or_404(ItemReview, id=id_)
 
-    r.title = request.POST["title"]
-    r.rating = request.POST["rating"]
-    r.body = request.POST["body"]
-    r.author = request.POST["author"]
-    r.subject = request.POST["subject"]
+    r.title = request.POST.get("title", r.title)
+    r.rating = request.POST.get("rating", r.rating)
+    r.body = request.POST.get("body", r.body)
+
+    if "author" in request.POST:
+        author = User.objects.filter(id=request.POST["author"])
+        if author.exists():
+            r.author = author.first()
+        else:
+            return JsonResponse({
+                "ok": False,
+                "message": "Author does not exist"
+            })
+
+    if "subject" in request.POST:
+        subject = AbstractItem.objects.filter(id=request.POST["subject"])
+        if subject.exists():
+            r.subject = subject.first()
+        else:
+            return JsonResponse({
+                "ok": False,
+                "message": "Subject does not exist"
+            })
 
     r.save()
 
     return JsonResponse({
         "ok": True,
-        "result": u.get_dict()
+        "result": r.get_dict()
     })
