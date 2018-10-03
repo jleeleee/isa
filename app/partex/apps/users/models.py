@@ -16,6 +16,8 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
+    date_created = models.DateField(auto_now_add=True)
+
     @property
     def full_name(self):
         return "{} {}".format(first_name, last_name)

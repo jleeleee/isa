@@ -74,9 +74,9 @@ def delete(request, id_):
 def update(request, id_):
     u = get_object_or_404(User, id=id_)
 
-    u.username   = request.POST("username", u.username)
-    u.first_name = request.POST("first_name", u.first_name)
-    u.last_name  = request.POST("last_name", u.last_name)
+    u.username   = request.POST.get("username", u.username)
+    u.first_name = request.POST.get("first_name", u.first_name)
+    u.last_name  = request.POST.get("last_name", u.last_name)
 
     if "password" in request.POST:
         u.set_password(request.POST["password"])

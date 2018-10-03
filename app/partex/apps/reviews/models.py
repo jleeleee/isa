@@ -5,11 +5,13 @@ from ..listings.models import Listing, AbstractItem
 
 # Create your models here.
 class Review(models.Model):
-    EXPOSED_FIELDS = ["title", "rating", "body", "author"]
+    EXPOSED_FIELDS = ["title", "rating", "body", "author", "date_created"]
     title = models.CharField(max_length=300)
     rating = models.IntegerField()
     body = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authored_reviews")
+
+    date_created = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title
