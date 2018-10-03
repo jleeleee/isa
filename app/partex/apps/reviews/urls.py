@@ -19,6 +19,15 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('create/', views.create),
-    path('', views.index)
+    path('user/create', views.user_create),
+    path('user/<int:id_>', views.user_info),
+    path('user/<int:id_>/delete', views.user_delete),
+    path('user/<int:id_>/update', views.user_update),
+    path('user', views.user_index),
+
+    path('item/create', views.item_create),
+    path('item/<int:id_>', views.item_info),
+    path('item/<int:id_>/delete', views.item_delete),
+    path('item/<int:id_>/update', views.item_update),
+    path('item', views.item_index)
 ]
