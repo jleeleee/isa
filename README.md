@@ -33,7 +33,7 @@ The user microservice use these URLs:
 * GET  /api/v1/users/\<id\>/delete
 
 Parameters for create: 
-* REQUIRED: `username1`
+* REQUIRED: `username`
 * REQUIRED: `first_name`
 * REQUIRED: `last_name`
 * REQUIRED: `password`
