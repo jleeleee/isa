@@ -31,7 +31,6 @@ def user_create(request):
     if any(map(lambda k: k not in request.POST, required_fields)):
         return JsonResponse({
             "ok": False,
-            "fuck": str(request.POST),
             "message": "Missing a required field: (one of {})".format(required_fields)
         })
 
