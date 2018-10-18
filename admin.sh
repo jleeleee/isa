@@ -15,13 +15,13 @@ stopdb\n
 stopserver
 "
 
-ROOTPASS='$3cureUS'
+ROOTPASS="\$3cureUS"
 
 DROPDB="drop database cs4501;"
 CREATEDB="create database cs4501 character set utf8;
 grant all on cs4501.* to 'www'@'%';
 grant all on test_cs4501.* to 'www'@'%';"
-CREATEUSER="create user 'www'@'%' identified by '$ROOTPASS';"
+CREATEUSER="create user 'www'@'%' identified by '\$3cureUS';"
 DROPUSER="drop user 'www'@'%';"
 
 case $1 in
@@ -46,16 +46,18 @@ case $1 in
             "mysql -uroot -p'$ROOTPASS' -h localhost -e\"$DROPUSER\""
         ;;
     "makedbuser")
+        echo "!!! WARNING This does not work"
+        echo "Do it yourself with mysql-cli"
         docker exec -it mysql /bin/bash -c \
-            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$CREATEUSER\""
+            "mysql -uroot -p'$ROOTPASS' -h localhost -e\"$CREATEUSER\""
         ;;
     "dropdb")
         docker exec -it mysql /bin/bash -c \
-            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$DROPDB\""
+            "mysql -uroot -p'$ROOTPASS' -h localhost -e\"$DROPDB\""
         ;;
     "makedb")
         docker exec -it mysql /bin/bash -c \
-            "mysql -uroot -p'\$3cureUS' -h localhost -e\"$CREATEDB\""
+            "mysql -uroot -p'$ROOTPASS' -h localhost -e\"$CREATEDB\""
         ;;
     "mysql")
         docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=$ROOTPASS -v $PWD/db:/var/lib/mysql mysql:5.7.23
