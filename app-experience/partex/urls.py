@@ -21,9 +21,6 @@ from .apps.listings import urls as listings
 from .apps.reviews import urls as reviews
 
 apipatterns = [
-    path('users/', include(users)),
-    path('listings/', include(listings)),
-    path('reviews/', include(reviews))
 ]
 
 urlpatterns = [
