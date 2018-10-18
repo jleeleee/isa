@@ -82,3 +82,53 @@ def update(request, id_):
         "ok": True,
         "result": lst.get_dict()
     })
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def create_abstract(request):
+    required_fields = ["name"]
+    if any(map(lambda k: k not in request.POST, required_fields)):
+        return JsonResponse({
+            "ok": False,
+            "message": "Missing a required field: (one of {})".format(required_fields)
+        })
+
+    item = AbstractItem.objects.create(
+        name = request.POST["name"]
+        )
+
+    item.save()
+
+    return JsonResponse({
+        "ok": True,
+        "result": item.get_dict()
+    })
+
+def delete_abstract(request, id_):
+    item = get_object_or_404(AbstractItem, id=id_);
+
+    if item.exists():
+        item = item.first()
+        item.delete()
+
+        return JsonResponse({
+            "ok": True,
+            "result": item.get_dict()
+        })
+
+    return JsonResponse({
+        "ok": False
+    })
+
+def update_abstract(request, id_):
+    item = get_object_or_404(AbstractItem, id=id_);
+
+    item.name = request.POST.get("name", item.name)
+    item.generic_description = request.POST.get("generic_description", item.generic_description)
+
+    item.save()
+
+    return JsonResponse({
+        "ok": True,
+        "result": item.get_dict()
+    })

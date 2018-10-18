@@ -4,9 +4,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
-def info(request, id_):
+def index(request, id_):
+    return JsonResponse({
+        "ok": True,
+        "result": []
+    })
 
-    context = {
-        "test": "meme"
-    }
-    return render("listing.html", context)
+def get_user(request, id_):
+

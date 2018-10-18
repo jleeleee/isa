@@ -23,5 +23,10 @@ urlpatterns = [
     path('<int:id_>/delete', views.delete),
     path('<int:id_>/update', views.update),
     path('<int:id_>', views.info),
+
+    path('base/create', views.create_abstract),
+    path('base/<int:id_>/delete', views.create_abstract),
+    path('base/<int:id_>/update', views.create_abstract),
+
     path('', views.index)
 ]
