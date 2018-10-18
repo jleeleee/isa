@@ -19,7 +19,8 @@ DROPDB="drop database cs4501;"
 CREATEDB="create database cs4501 character set utf8;
 grant all on cs4501.* to 'www'@'%';
 grant all on test_cs4501.* to 'www'@'%';"
-CREATEUSER="create user 'www'@'%' identified by '\$3cureUS';"
+CREATEUSER="create user 'www'@'%' identified by '$ROOTPASS';"
+DROPUSER="drop user 'www'@'%';"
 
 case $1 in
     "up")
@@ -37,6 +38,10 @@ case $1 in
     "makemigrations")
         docker-compose exec models /bin/bash -c \
             "python manage.py makemigrations"
+        ;;
+    "dropdbuser")
+        docker exec -it mysql /bin/bash -c \
+            "mysql -uroot -p'$ROOTPASS' -h localhost -e\"$DROPUSER\""
         ;;
     "makedbuser")
         docker exec -it mysql /bin/bash -c \
