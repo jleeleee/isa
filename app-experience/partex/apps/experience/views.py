@@ -9,7 +9,13 @@ import json
 
 # Create your views here.
 
-def index(request):
+def homepage(request):
+    context = {}
+
+    try:
+        req = urllib.request.Request("http://models:8000/api/v1/")
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+
     return JsonResponse({
         "ok":True,
         "result":"experience"
