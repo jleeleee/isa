@@ -41,4 +41,5 @@ services:
         links:
             - exp:partex-experience
         command:
-            "mod_wsgi-express start-server --reload-on-changes /app /app-web/wsgi.py"
+          # "mod_wsgi-express start-server --reload-on-changes /app /app-web/wsgi.py"
+            "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
