@@ -27,4 +27,3 @@ apipatterns = [
 urlpatterns = [
     path('api/v1/', include(apipatterns))
 ]
-listing
