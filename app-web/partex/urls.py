@@ -16,16 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .apps.users import urls as users
-from .apps.listings import urls as listings
-from .apps.reviews import urls as reviews
-
-apipatterns = [
-    path('users/', include(users)),
-    path('listings/', include(listings)),
-    path('reviews/', include(reviews))
-]
+from .apps.base import views as base
 
 urlpatterns = [
-    path('api/v1/', include(apipatterns))
+    path('', base.index)
 ]

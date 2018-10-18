@@ -30,7 +30,8 @@ services:
         links:
             - models:partex-models
         command:
-            "mod_wsgi-express start-server --reload-on-changes /app /app-exp/wsgi.py"
+          # "mod_wsgi-express start-server --reload-on-changes /app /app-exp/wsgi.py"
+            "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
     web:
         image: tp33/django
         container_name: web
