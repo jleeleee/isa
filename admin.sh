@@ -3,14 +3,16 @@
 pushd $(dirname ${BASH_SOURCE[0]}) > /dev/null
 
 CMDS="Available commands:\n
-django\n
-django-cli\n
+up\n
+models-cli\n
+exp-cli\n
+web-cli\n
 makemigrations\n
 mysql\n
 mysql-cli\n
 pull\n
-stopdb
-stopweb
+stopdb\n
+stopserver
 "
 
 DROPDB="drop database cs4501;"
@@ -20,14 +22,20 @@ grant all on test_cs4501.* to 'www'@'%';"
 CREATEUSER="create user 'www'@'%' identified by '\$3cureUS';"
 
 case $1 in
-    "django")
+    "up")
         docker-compose up
         ;;
-    "django-cli")
+    "models-cli")
+        docker-compose exec models /bin/bash
+        ;;
+    "exp-cli")
+        docker-compose exec exp /bin/bash
+        ;;
+    "web-cli")
         docker-compose exec web /bin/bash
         ;;
     "makemigrations")
-        docker-compose exec web /bin/bash -c \
+        docker-compose exec models /bin/bash -c \
             "python manage.py makemigrations"
         ;;
     "makedbuser")
@@ -52,7 +60,9 @@ case $1 in
     "pull")
         docker pull tp33/django
         ;;
-    "stopweb")
+    "stopserver")
+        docker-compose rm models
+        docker-compose rm exp
         docker-compose rm web
         ;;
     "stopdb")
