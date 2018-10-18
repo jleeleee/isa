@@ -19,9 +19,12 @@ from django.urls import path, include
 from .apps.experience import views
 
 apipatterns = [
-    path('home', views.homepage)
+    path('home', views.homepage),
+    path('all_listings', views.all_listings),
+    path('all_reviews', views.all_reviews)
 ]
 
 urlpatterns = [
     path('api/v1/', include(apipatterns))
 ]
+listing

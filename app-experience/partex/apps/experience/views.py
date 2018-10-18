@@ -28,11 +28,15 @@ def homepage(request):
         "result":"experience"
     })
 
-def home(request):
-    pass
 
 def listing(request):
+    # Returns the page containing info about the listing
     pass
 
-def abstractItem(request):
+def all_listings(request):
+    # Returns all active listings
+    pass
+
+def all_reviews(request):
+    # Returns all reviews about a given user or item
     pass
