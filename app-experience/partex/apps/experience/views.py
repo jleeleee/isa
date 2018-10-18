@@ -15,9 +15,16 @@ def homepage(request):
     try:
         req = urllib.request.Request("http://models:8000/api/v1/")
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+    except urllib.error.HTTPError as e:
+        return JsonResponse({
+            "ok": "False",
+            "error": str(e.reason),
+            "str": str(e)
+        })
 
     return JsonResponse({
-        "ok":True,
+        "ok": True,
         "result":"experience"
     })
 

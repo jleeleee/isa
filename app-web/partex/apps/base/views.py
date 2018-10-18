@@ -19,8 +19,9 @@ def index(request):
             "error": str(e.reason),
             "str": str(e)
         })
-        context = {
-            "exp": resp_json
-        }
+
+    context = {
+        "exp": resp_json
+    }
 
     return render(request, "index.html", context)
