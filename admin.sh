@@ -15,7 +15,8 @@ stopweb
 
 DROPDB="drop database cs4501;"
 CREATEDB="create database cs4501 character set utf8;
-grant all on cs4501.* to 'www'@'%';"
+grant all on cs4501.* to 'www'@'%';
+grant all on test_cs4501.* to 'www'@'%';"
 CREATEUSER="create user 'www'@'%' identified by '\$3cureUS';"
 
 case $1 in
