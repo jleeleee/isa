@@ -15,6 +15,8 @@ stopdb\n
 stopserver
 "
 
+ROOTPASS='$3cureUS'
+
 DROPDB="drop database cs4501;"
 CREATEDB="create database cs4501 character set utf8;
 grant all on cs4501.* to 'www'@'%';
@@ -56,11 +58,11 @@ case $1 in
             "mysql -uroot -p'\$3cureUS' -h localhost -e\"$CREATEDB\""
         ;;
     "mysql")
-        docker run --name mysql -d --env-file app-models/partex/db/vars.env -v $PWD/db:/var/lib/mysql mysql:5.7.23
+        docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=$ROOTPASS -v $PWD/db:/var/lib/mysql mysql:5.7.23
         ;;
     "mysql-cli")
         docker exec -it mysql /bin/bash -c \
-            "mysql -uroot -p'\$3cureUS' -h localhost"
+            "mysql -uroot -p'$ROOTPASS' -h localhost"
         ;;
     "pull")
         docker pull tp33/django
