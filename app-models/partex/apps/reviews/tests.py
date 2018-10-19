@@ -44,14 +44,14 @@ class GetReviews(TestCase):
             name="item a",
             generic_description="description"
         )
-        self.review_i1 = UserReview.objects.create(
+        self.review_i1 = ItemReview.objects.create(
             title="ItemReview 1",
             rating=2,
             body="ItemReview test 1",
             author=self.user1,
             subject=self.item
         )
-        self.review_i2 = UserReview.objects.create(
+        self.review_i2 = ItemReview.objects.create(
             title="ItemReview 2",
             rating=4,
             body="ItemReview test 2",
@@ -66,16 +66,24 @@ class GetReviews(TestCase):
         reviewer2 = User.objects.get(username="reviewer2")
         review_u1 = UserReview.objects.get(title="UserReview 1")
         review_u2 = UserReview.objects.get(title="UserReview 2")
+        
+        reviews = [review_u1, review_u2]
+        review_ids = [r.id for r in reviews]
 
-        reviewer_ids = [review]
-        u_listings = seller..all().values_list('id', flat=True).order_by('id')
-        self.assertEqual(list(u_listings), listing_ids)
+        u_listings = seller.reviews.all().values_list('id', flat=True).order_by('id')
+        self.assertEqual(list(u_listings), review_ids)
 
     def test_item_review(self):
-        l1 = Listing.objects.get(name="item a")
+        pass
 
     def tearDown(self):
         self.user1.delete()
         self.user2.delete()
-        self.l1.delete()
+        self.seller.delete()
+        self.review_u1.delete()
+        self.review_u2.delete()
+        self.item.delete()
+        self.review_i1.delete()
+        self.review_i2.delete()
+
 
