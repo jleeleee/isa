@@ -21,11 +21,11 @@ from .apps.listings import urls as listings
 from .apps.reviews import urls as reviews
 
 apipatterns = [
-    path('users', include(users)),
-    path('listings', include(listings)),
-    path('reviews', include(reviews))
+    path('users/', include(users)),
+    path('listings/', include(listings)),
+    path('reviews/', include(reviews))
 ]
 
 urlpatterns = [
-    path('api/v1', include(apipatterns))
+    path('api/v1/', include(apipatterns))
 ]
