@@ -18,6 +18,9 @@ class AbstractItem(models.Model):
     def get_dict(self):
         return { d: getattr(self, d) for d in AbstractItem.EXPOSED_FIELDS }
 
+    def average_reviews(self):
+        return self.reviews.all().aggregate(models.Avg('rating'))
+
 class Listing(models.Model):
     EXPOSED_FIELDS = ["id", "name", "price", "status", "description", "date_created"]
     name = models.CharField(max_length=200)

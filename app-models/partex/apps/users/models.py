@@ -25,7 +25,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'username'
 
     def average_reviews(self):
-        return self.reviews.all().aggregate(Avg('rating'))
+        return self.reviews.all().aggregate(models.Avg('rating'))
 
     def __str__(self):
         return self.username
