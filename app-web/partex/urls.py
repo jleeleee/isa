@@ -19,5 +19,6 @@ from django.urls import path, include
 from .apps.base import views as base
 
 urlpatterns = [
-    path('', base.index)
+    path('', base.index),
+    path('listing/<int:_id>', base.listing, name="listing")
 ]
