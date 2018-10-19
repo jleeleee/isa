@@ -6,11 +6,11 @@ class GetListingsFromAbstract(TestCase):
     # Getting a set of listings by looking at an abstract item
     def setUp(self):
         self.AI = AbstractItem.objects.create(
-                name="AI_name", 
+                name="AI_name",
                 generic_description="AI_descr",
                 )
         self.BI = AbstractItem.objects.create(
-                name="BI_name", 
+                name="BI_name",
                 generic_description="BI_descr",
                 )
         self.L1 = Listing.objects.create(
@@ -22,29 +22,26 @@ class GetListingsFromAbstract(TestCase):
             )
         self.L2 = Listing.objects.create(
                 name="L2_name",
-                price=1.00,
+                price=2.00,
                 status=False,
                 description="L2_descr",
                 base_item=AI
             )
         self.L3 = Listing.objects.create(
                 name="L3_name",
-                price=1.00,
+                price=3.00,
                 status=True,
                 description="L3_descr",
                 base_item=AI
             )
         self.L4 = Listing.objects.create(
                 name="L4_name",
-                price=1.00,
+                price=4.00,
                 status=True,
                 description="L4_descr",
                 base_item=BI
             )
     def test_get_listing_from_abstract(self):
-        pass
-        
-        
 
     def tearDown(self):
         self.AI.delete()
