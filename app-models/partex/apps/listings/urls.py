@@ -28,5 +28,7 @@ urlpatterns = [
     path('base/<int:id_>/delete', views.create_abstract),
     path('base/<int:id_>/update', views.create_abstract),
 
+    path('recent', views.get_three_listings),
+
     path('', views.index)
 ]

@@ -132,3 +132,11 @@ def update_abstract(request, id_):
         "ok": True,
         "result": item.get_dict()
     })
+
+def get_three_listings(request):
+    three_most_recent_listings = Listing.objects.filter(status=True).order_by('date_created')[:3]
+
+    return JsonResponse({
+        "ok": True,
+        "results": list(three_most_recent_listings.values("name", "id", "price"))
+    })
