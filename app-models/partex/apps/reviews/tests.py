@@ -66,7 +66,7 @@ class GetReviews(TestCase):
         reviewer2 = User.objects.get(username="reviewer2")
         review_u1 = UserReview.objects.get(title="UserReview 1")
         review_u2 = UserReview.objects.get(title="UserReview 2")
-        
+
         reviews = [review_u1, review_u2]
         review_ids = [r.id for r in reviews]
 
@@ -75,6 +75,18 @@ class GetReviews(TestCase):
 
     def test_item_review(self):
         pass
+
+    def test_review_from_review_user(self):
+        review1 = UserReview.objects.get(title="UserReview 1")
+        u_reviews = review1.subject.reviews.all().values_list('id', flat=True).order_by('id')
+        review_ids = [self.review_u1.id, self.review_u2.id]
+        self.assertEqual(list(u_reviews), review_ids)
+
+    def test_review_from_review_item(self):
+        review1 = ItemReview.objects.get(title="ItemReview 1")
+        u_reviews = review1.subject.reviews.all().values_list('id', flat=True).order_by('id')
+        review_ids = [self.review_i1.id, self.review_i2.id]
+        self.assertEqual(list(u_reviews), review_ids)
 
     def tearDown(self):
         self.user1.delete()
@@ -85,5 +97,4 @@ class GetReviews(TestCase):
         self.item.delete()
         self.review_i1.delete()
         self.review_i2.delete()
-
 

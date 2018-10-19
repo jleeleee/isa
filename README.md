@@ -88,3 +88,9 @@ Fixtures are located in `app/partex/db/fixtures` as JSON files. They can be load
 ```
 
 Fixtures are automatically loaded when `docker-compose up` is run.
+
+## Unit Tests
+Unit tests for the models can be run inside the django container with
+```
+./manage.py test partex.apps
+```

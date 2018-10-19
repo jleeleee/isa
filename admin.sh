@@ -72,11 +72,7 @@ case $1 in
         ;;
     "testmodels")
         docker exec -it models /bin/bash -c \
-            "python manage.py test partex.apps.users"
-        docker exec -it models /bin/bash -c \
-            "python manage.py test partex.apps.listings"
-        docker exec -it models /bin/bash -c \
-            "python manage.py test partex.apps.reviews"
+            "python manage.py test partex.apps"
         ;;
     "stopserver")
         docker-compose rm models
