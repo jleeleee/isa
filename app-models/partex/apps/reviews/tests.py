@@ -74,7 +74,28 @@ class GetReviews(TestCase):
         self.assertEqual(list(u_listings), review_ids)
 
     def test_item_review(self):
-        pass
+        item = AbstractItem.objects.get(name="item a")
+        reviewer1 = User.objects.get(username="reviewer1")
+        reviewer2 = User.objects.get(username="reviewer2")
+        review_i1 = ItemReview.objects.get(title="ItemReview 1")
+        review_i2 = ItemReview.objects.get(title="ItemReview 2")
+        
+        reviews = [review_i1, review_i2]
+        review_ids = [r.id for r in reviews]
+
+        i_listings = item.reviews.all().values_list('id', flat=True).order_by('id')
+        self.assertEqual(list(i_listings), review_ids)
+
+    def test_avg_user_review(self):
+        seller = User.objects.get(username="seller")
+        avg_review = seller.average_reviews()['rating__avg']
+        self.assertEqual(3, avg_review)
+
+    def test_avg_item_review(self):
+        item = AbstractItem.objects.get(name="item a")
+        avg_review = item.average_reviews()['rating__avg']
+        self.assertEqual(3, avg_review)
+
 
     def test_review_from_review_user(self):
         review1 = UserReview.objects.get(title="UserReview 1")
