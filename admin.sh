@@ -11,7 +11,7 @@ makemigrations\n
 mysql\n
 mysql-cli\n
 pull\n
-testmodels\n
+test\n
 stopdb\n
 stopserver
 "
@@ -70,7 +70,7 @@ case $1 in
     "pull")
         docker pull tp33/django
         ;;
-    "testmodels")
+    "test")
         docker exec -it models /bin/bash -c \
             "python manage.py test partex.apps"
         ;;
