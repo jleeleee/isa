@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from .apps.base import views as base
 
@@ -23,4 +25,4 @@ urlpatterns = [
     path('listing/<int:_id>', base.listing, name="listing"),
     path('listings', base.listing_index, name="listings"),
     path('about', base.about, name="about")
-]
+]  + static(settings.STATIC_URL, document_root="partex/static")

@@ -19,8 +19,8 @@ services:
       python /app/manage.py loaddata /app/partex/db/fixtures/users.json &&
       python /app/manage.py loaddata /app/partex/db/fixtures/listings.json &&
       python /app/manage.py loaddata /app/partex/db/fixtures/reviews.json &&
-      /usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
-      # mod_wsgi-express start-server --reload-on-changes --working-directory /app /app-models/wsgi.py"
+      mod_wsgi-express start-server --reload-on-changes /app/partex/wsgi.py"
+      # /usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
   exp:
     image: tp33/django
     container_name: exp
@@ -32,8 +32,8 @@ services:
     links:
       - models:models
     command:
-      # "mod_wsgi-express start-server --reload-on-changes /app /app-exp/wsgi.py"
-      "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+      "mod_wsgi-express start-server /app/partex/wsgi.py"
+      # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
   web:
     image: tp33/django
     container_name: web
@@ -45,5 +45,5 @@ services:
     links:
       - exp:partex-experience
     command:
-      # "mod_wsgi-express start-server --reload-on-changes /app /app-web/wsgi.py"
-      "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+      "mod_wsgi-express start-server /app/partex/wsgi.py"
+      # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
