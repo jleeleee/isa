@@ -6,7 +6,40 @@
     color: red;
 }
 
+.price:before {
+    content: '$';
+}
 .price {
     font-weight: bold;
-    color: red-orange;
+    color: rgb(255, 58, 71);
+    font-size: 20px;
+}
+
+.review-title,
+.review-author,
+.review-rating {
+    display: inline-block;
+}
+.review-author {
+    font-weight: bold;
+}
+.review-author:before {
+    content: '-';
+}
+
+.review-rating:before {
+    content: '(';
+}
+.review-rating:after {
+    content: '/ 5 )';
+}
+.review-rating {
+    margin-left: 5px;
+}
+
+.review {
+    border-top: 1px gray solid;
+    border-bottom: 1px gray solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

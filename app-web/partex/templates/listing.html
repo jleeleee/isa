@@ -29,4 +29,16 @@
             {% endif %}
         </div>
     </div>
+    <div class="row">
+        <h3>Item Reviews</h3>
+        <div class="col-md-12 review">
+            {% for r in reviews %}
+                <h4 class="review-title"> {{ r.title }} </h4>
+                <h5 class="review-author"> {{ r.author_name }} </h4>
+                <p  class="review-rating"> {{ r.rating }} </p>
+                <p  class="review-date"> {{ r.date }} </p>
+                {{ r.body }}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock content %}

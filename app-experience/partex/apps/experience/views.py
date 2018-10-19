@@ -31,7 +31,8 @@ def listing(request, _id):
     try:
         req = urllib.request.Request("http://models:8000/api/v1/listings/{}".format(_id))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        resp = json.loads(resp_json)
+        listing = json.loads(resp_json)
+
     except urllib.error.HTTPError as e:
         return JsonResponse({
             "ok": "False",
@@ -39,9 +40,20 @@ def listing(request, _id):
             "str": str(e)
         })
 
+    try:
+        item = listing["result"]["base_item"]
+
+        req = urllib.request.Request("http://models:8000/api/v1/reviews/item/{}".format(item))
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        reviews = json.loads(resp_json)["result"]
+
+    except urllib.error.HTTPError as e:
+        reviews = []
+
     return JsonResponse({
         "ok": True,
-        "listing": resp["result"]
+        "listing": listing["result"],
+        "reviews": reviews
     })
 
 def all_listings(request):

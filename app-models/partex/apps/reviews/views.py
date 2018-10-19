@@ -128,10 +128,12 @@ def item_index(request):
     })
 
 def item_info(request, id_):
-    review = get_object_or_404(ItemReview, id=id_)
+    item = get_object_or_404(AbstractItem, id=id_)
     return JsonResponse({
         "ok": True,
-        "result": review.get_dict()
+        "result": [
+            r.get_dict() for r in item.reviews.all()
+        ]
     })
 
 @csrf_exempt
