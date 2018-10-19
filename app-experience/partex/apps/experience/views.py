@@ -29,7 +29,7 @@ def homepage(request):
 def listing(request, _id):
     # Returns the page containing info about the listing
     try:
-        req = urllib.request.Request("http://models:8000/api/v1/listings/" + _id)
+        req = urllib.request.Request("http://models:8000/api/v1/listings/{}".format(_id))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:

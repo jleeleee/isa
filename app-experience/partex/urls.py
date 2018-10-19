@@ -21,7 +21,7 @@ from .apps.experience import views
 apipatterns = [
     path('home', views.homepage),
     path('all_listings', views.all_listings),
-    path('all_reviews', views.all_reviews)
+    path('listing/<int:_id>', views.listing)
 ]
 
 urlpatterns = [

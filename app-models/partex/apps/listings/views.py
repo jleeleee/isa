@@ -138,5 +138,5 @@ def get_three_listings(request):
 
     return JsonResponse({
         "ok": True,
-        "results": list(three_most_recent_listings.values("name", "id", "price"))
+        "result": list(three_most_recent_listings.values("name", "id", "price"))
     })

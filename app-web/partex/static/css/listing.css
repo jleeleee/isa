@@ -1,0 +1,12 @@
+.in-stock {
+    color: green;
+}
+
+.not-in-stock {
+    color: red;
+}
+
+.price {
+    font-weight: bold;
+    color: red-orange;
+}
