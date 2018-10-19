@@ -21,7 +21,7 @@ def index(request):
         })
 
     context = {
-        "exp": resp_json
+        "exp": resp
     }
 
     return render(request, "index.html", context)
