@@ -41,3 +41,8 @@ class Listing(models.Model):
         if self.base_item is not None:
             ret_dict["base_item"] = self.base_item.id
         return ret_dict
+
+    def get_listings(self):
+        if(self.base_item == None):
+            return None
+        return self.base_item.listings.all()
