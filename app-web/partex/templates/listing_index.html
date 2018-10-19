@@ -9,16 +9,13 @@
 {% block content %}
     <div class="row">
         <div class="col-md-6">
-            <h1>Recent listings</h1>
+            <h1>All listings</h1>
             {% for l in listings %}
                 <div class="listing">
-                    <h4><a href="{% url 'listing' l.id %}">{{ l.name }}</a></h4>
-                    <p>Desc: {{ l }}</p>
+                    <h4><a href="{% url 'listing' l.id %}">{{ l.name }}</a></h3>
+                    <p>{{ l.description }}</p>
                 </div>
             {% endfor %}
-        </div>
-        <div class="col-md-6 mt-5">
-            <a class="btn btn-primary" href="{% url 'listings' %}">View all listings</a>
         </div>
     </div>
 {% endblock content %}

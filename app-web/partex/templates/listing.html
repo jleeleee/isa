@@ -6,12 +6,6 @@
     <link href="{% static 'css/listing.css' %}" rel="stylesheet">
 {% endblock css %}
 
-{% block nav %}
-    <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-    </li>
-{% endblock nav %}
-
 {% block content %}
     <div class="row mt-5">
         <div class="col-md-5">
@@ -19,6 +13,7 @@
         </div>
         <div class="col-md-7">
             <h1> {{ listing.name }} </h1>
+            <h4> {{ listing.seller_name }} </h4>
             <p> {{ listing.description }} </p>
             <p class="price"> {{ listing.price }} </p>
             <p> Date posted: {{ listing.date_created }} </p>

@@ -38,6 +38,7 @@ class Listing(models.Model):
     def get_dict(self):
         ret_dict = { d: getattr(self, d) for d in Listing.EXPOSED_FIELDS }
         ret_dict["seller"] = self.seller.id
+        ret_dict["seller_name"] = "{} {}".format(self.seller.first_name, self.seller.last_name)
         if self.base_item is not None:
             ret_dict["base_item"] = self.base_item.id
         return ret_dict

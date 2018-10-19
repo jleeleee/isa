@@ -21,7 +21,7 @@ def index(request):
         })
 
     context = {
-        "exp": resp
+        "listings": resp["listings"]
     }
 
     return render(request, "index.html", context)
@@ -51,7 +51,7 @@ def listing_index(request):
     context = {}
 
     try:
-        req = urllib.request.Request("http://exp:8000/api/v1/listing/recent")
+        req = urllib.request.Request("http://exp:8000/api/v1/all_listings")
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
@@ -62,7 +62,7 @@ def listing_index(request):
         })
 
     context = {
-        "exp": resp
+        "listings": resp["listings"]
     }
     return render(request, "listing_index.html", context)
 
