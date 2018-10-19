@@ -13,32 +13,27 @@ class GetUsersListings(TestCase):
             last_name="ln",
             email="a@a.a"
         )
-        self.user1.save()
         self.user2 = User.objects.create(
             username="user2",
             first_name="fn",
             last_name="ln",
             email="b@b.b"
         )
-        self.user2.save()
         self.l1 = Listing.objects.create(
             name="listing a",
             price=1.00,
             seller=self.user1
         )
-        self.l1.save()
         self.l2 = Listing.objects.create(
             name="listing b",
             price=2.00,
             seller=self.user1
         )
-        self.l2.save()
         self.l3 = Listing.objects.create(
             name="listing c",
             price=3.00,
             seller=self.user2
         )
-        self.l3.save()
     def testGetListings(self):
         u1 = User.objects.get(username="user1")
         l1 = Listing.objects.get(name="listing a")

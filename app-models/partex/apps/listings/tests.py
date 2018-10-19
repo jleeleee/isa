@@ -16,12 +16,10 @@ class GetListingsFromAbstract(TestCase):
                 name="AI_name",
                 generic_description="AI_descr"
                 )
-        self.AI.save()
         self.BI = AbstractItem.objects.create(
                 name="BI_name",
                 generic_description="BI_descr"
                 )
-        self.BI.save()
         self.L1 = Listing.objects.create(
                 name="L1_name",
                 price=1.00,
@@ -30,7 +28,6 @@ class GetListingsFromAbstract(TestCase):
                 base_item=self.AI,
                 seller=self.Seller
             )
-        self.L1.save()
         self.L2 = Listing.objects.create(
                 name="L2_name",
                 price=2.00,
@@ -39,7 +36,6 @@ class GetListingsFromAbstract(TestCase):
                 base_item=self.AI,
                 seller=self.Seller
             )
-        self.L2.save()
         self.L3 = Listing.objects.create(
                 name="L3_name",
                 price=3.00,
@@ -48,7 +44,6 @@ class GetListingsFromAbstract(TestCase):
                 base_item=self.AI,
                 seller=self.Seller
             )
-        self.L3.save()
         self.L4 = Listing.objects.create(
                 name="L4_name",
                 price=4.00,
@@ -57,7 +52,6 @@ class GetListingsFromAbstract(TestCase):
                 base_item=self.BI,
                 seller=self.Seller
             )
-        self.L4.save()
 
     def test_get_listing_from_abstract(self):
         ai = AbstractItem.objects.get(name="AI_name")
@@ -108,12 +102,10 @@ class GetAlternateListings(TestCase):
                 name="AI_name",
                 generic_description="AI_descr"
                 )
-        self.AI.save()
         self.BI = AbstractItem.objects.create(
                 name="BI_name",
                 generic_description="BI_descr"
                 )
-        self.BI.save()
         self.L1 = Listing.objects.create(
                 name="L1_name",
                 price=1.00,
@@ -122,7 +114,6 @@ class GetAlternateListings(TestCase):
                 base_item=self.AI,
                 seller=self.Seller
             )
-        self.L1.save()
         self.L2 = Listing.objects.create(
                 name="L2_name",
                 price=2.00,
@@ -131,7 +122,6 @@ class GetAlternateListings(TestCase):
                 base_item=self.AI,
                 seller=self.Seller
             )
-        self.L2.save()
         self.L3 = Listing.objects.create(
                 name="L3_name",
                 price=3.00,
@@ -140,7 +130,6 @@ class GetAlternateListings(TestCase):
                 base_item=self.AI,
                 seller=self.Seller
             )
-        self.L3.save()
         self.L4 = Listing.objects.create(
                 name="L4_name",
                 price=4.00,
@@ -149,7 +138,6 @@ class GetAlternateListings(TestCase):
                 base_item=self.BI,
                 seller=self.Seller
             )
-        self.L4.save()
         self.L5 = Listing.objects.create(
                 name="L5_name",
                 price=5.00,
@@ -157,7 +145,6 @@ class GetAlternateListings(TestCase):
                 description="L5_descr",
                 seller=self.Seller
             )
-        self.L5.save()
 
     def test_get_listing_from_abstract(self):
         listing = Listing.objects.get(name="L1_name")
