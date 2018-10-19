@@ -40,9 +40,13 @@ def listing(request, _id):
             "str": str(e)
         })
 
+    reviews = resp["reviews"]
+    average_rating = sum([r["rating"] for r in reviews])/len(reviews)
+
     context = {
         "listing": resp["listing"],
-        "reviews": resp["reviews"]
+        "reviews": resp["reviews"],
+        "average_rating": average_rating
     }
 
     return render(request, "listing.html", context)
