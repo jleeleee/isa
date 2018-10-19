@@ -12,8 +12,15 @@
             <h1>Recent listings</h1>
             {% for l in listings %}
                 <div class="listing">
-                    <h4><a href="{% url 'listing' l.id %}">{{ l.name }}</a></h4>
-                    <p>Desc: {{ l }}</p>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h4><a href="{% url 'listing' l.id %}">{{ l.name }}</a></h4>
+                        </div>
+                        <div class="col-sm-4">
+                            <h4 class="recent_price">{{ l.price }}</h4>
+                        </div>
+                    </div>
+                    <p>{{ l.description }}</p>
                 </div>
             {% endfor %}
         </div>

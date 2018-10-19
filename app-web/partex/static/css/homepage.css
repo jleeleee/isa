@@ -5,3 +5,12 @@
     padding: 10px;
     background-color: rgba(0, 0, 0, .05);
 }
+
+.recent_price {
+    width: 100%;
+    text-align: right;
+}
+
+.recent_price:before {
+    content: '$';
+}
