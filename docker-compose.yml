@@ -3,44 +3,47 @@
 version: '3'
 
 services:
-    models:
-        image: tp33/django
-        container_name: models
-        network_mode: default
-        external_links:
-            - mysql:db
-        volumes:
-            - ./app-models:/app
-        ports:
-            - "8001:8000"
-        command:
-            # bash -c "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
-            bash -c "python /app/manage.py migrate &&
-            python /app/manage.py loaddata /app/partex/db/fixtures/users.json &&
-            python /app/manage.py loaddata /app/partex/db/fixtures/listings.json &&
-            python /app/manage.py loaddata /app/partex/db/fixtures/reviews.json &&
-            mod_wsgi-express start-server --reload-on-changes --working-directory /app /app-models/wsgi.py"
-    exp:
-        image: tp33/django
-        container_name: exp
-        volumes:
-            - ./app-experience:/app
-        ports:
-            - "8002:8000"
-        links:
-            - models:partex-models
-        command:
-          # "mod_wsgi-express start-server --reload-on-changes /app /app-exp/wsgi.py"
-            "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
-    web:
-        image: tp33/django
-        container_name: web
-        volumes:
-            - ./app-web:/app
-        ports:
-            - "8000:8000"
-        links:
-            - exp:partex-experience
-        command:
-          # "mod_wsgi-express start-server --reload-on-changes /app /app-web/wsgi.py"
-            "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+  models:
+    image: tp33/django
+    container_name: models
+    network_mode: default
+    external_links:
+      - mysql:db
+    volumes:
+      - ./app-models:/app
+    ports:
+      - "8001:8000"
+    command:
+      # bash -c "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+      bash -c "python /app/manage.py migrate &&
+      python /app/manage.py loaddata /app/partex/db/fixtures/users.json &&
+      python /app/manage.py loaddata /app/partex/db/fixtures/listings.json &&
+      python /app/manage.py loaddata /app/partex/db/fixtures/reviews.json &&
+      /usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+      # mod_wsgi-express start-server --reload-on-changes --working-directory /app /app-models/wsgi.py"
+  exp:
+    image: tp33/django
+    container_name: exp
+    network_mode: default
+    volumes:
+      - ./app-experience:/app
+    ports:
+      - "8002:8000"
+    links:
+      - models:models
+    command:
+      # "mod_wsgi-express start-server --reload-on-changes /app /app-exp/wsgi.py"
+      "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+  web:
+    image: tp33/django
+    container_name: web
+    network_mode: default
+    volumes:
+      - ./app-web:/app
+    ports:
+      - "8000:8000"
+    links:
+      - exp:partex-experience
+    command:
+      # "mod_wsgi-express start-server --reload-on-changes /app /app-web/wsgi.py"
+      "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
