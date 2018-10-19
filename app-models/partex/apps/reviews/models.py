@@ -17,6 +17,8 @@ class Review(models.Model):
         return self.title
     def get_dict(self):
         ret_dict = { d: getattr(self, d) for d in Review.EXPOSED_FIELDS }
+        ret_dict["author_name"] = "{} {}".format(self.author.first_name, self.author.last_name)
+        return ret_dict
 
 class UserReview(Review):
     subject = models.ForeignKey(User, on_delete=models.CASCADE, related_name="reviews")
@@ -24,8 +26,7 @@ class UserReview(Review):
     def __str__(self):
         return self.title
     def get_dict(self):
-        ret_dict = { d: getattr(self, d) for d in UserReview.EXPOSED_FIELDS }
-        ret_dict["author"] = self.author.id
+        ret_dict = super().get_dict()
         ret_dict["subject"] = self.subject.id
         return ret_dict
 
@@ -35,7 +36,6 @@ class ItemReview(Review):
     def __str__(self):
         return self.title
     def get_dict(self):
-        ret_dict = { d: getattr(self, d) for d in ItemReview.EXPOSED_FIELDS }
-        ret_dict["author"] = self.author.id
+        ret_dict = super().get_dict()
         ret_dict["subject"] = self.subject.id
         return ret_dict
