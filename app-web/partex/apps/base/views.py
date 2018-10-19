@@ -45,3 +45,25 @@ def listing(request, _id):
     }
 
     return render(request, "listing.html", context)
+
+def listing_index(request):
+    context = {}
+
+    try:
+        req = urllib.request.Request("http://exp:8000/api/v1/listing".format(_id))
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+    except urllib.error.HTTPError as e:
+        return JsonResponse({
+            "ok": "False",
+            "error": str(e.reason),
+            "str": str(e)
+        })
+
+    context = {
+        "exp": resp
+    }
+    return render(request, "listing_index.html", context)
+
+def about(request):
+    return render(request, "about.html", {})
