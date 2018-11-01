@@ -12,10 +12,7 @@ def send_data_to_models(path, data):
         res = urllib.request.urlopen(req, data=urllib.parse.urlencode(post_data).encode())
         resp_json = res.read().decode('utf-8')
         resp = json.loads(resp_json)
-        return {
-            "success": True,
-            "response": resp
-        }
+        return resp
     except urllib.error.HTTPError as e:
         return {
             "success": False,

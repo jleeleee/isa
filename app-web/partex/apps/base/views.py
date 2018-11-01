@@ -39,7 +39,11 @@ def login(request):
         form = forms.LoginForm(request.POST)
         if form.is_valid():
             response = forms.send_to_exp(request, form, "login")
-            return JsonResponse(response)
+            next = request.GET.get("next", reverse("homepage"))
+            http_resp = HttpResponseRedirect(next)
+            http_resp.set_cookie("auth", response["auth"])
+            http_resp.set_cookie("user_id", response["user_id"])
+            return http_resp
     else:
         form = forms.LoginForm()
 
