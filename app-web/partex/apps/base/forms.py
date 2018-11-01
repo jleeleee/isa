@@ -4,7 +4,7 @@ import urllib.request
 import urllib.parse
 import json
 
-def send_to_exp(request, path, form):
+def send_to_exp(request, form, path):
     data = form.cleaned_data
     url = "http://exp:8000/api/v1/{}".format(path)
 
@@ -14,7 +14,7 @@ def send_to_exp(request, path, form):
 
     try:
         req = urllib.request.Request(url)
-        res = urllib.request.urlopen(req, urllib.urlencode(post_data))
+        res = urllib.request.urlopen(req, urllib.parse.urlencode(post_data))
         resp_json = res.read().decode('utf-8')
         resp = json.loads(resp_json)
         return {
