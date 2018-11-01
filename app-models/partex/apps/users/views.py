@@ -84,3 +84,48 @@ def update(request, id_):
         "ok": True,
         "result": u.get_dict()
     })
+
+def login(request):
+    name_fields = ["username", "password"]
+    if any(map(lambda k: k not in request.POST, name_fields)):
+        return JsonResponse({
+            "ok": False,
+            "message": "Missing a required field: (one of {})".format(required_fields)
+        })
+    u = User.objects.filter(username = request.POST["username"])
+    if not u.exists():
+        return JsonResponse({
+            "ok": False,
+            "message": "User {} does not exists".format(request.POST["username"])
+        })
+
+    if not u.check_password(request.POST["password"]):
+        return JsonResponse({
+            "ok": False,
+            "message": "Invalid password"
+        })
+
+    auth = Authenticator.objects.create(user=u)
+
+    return JsonResponse({
+        "ok": True,
+        "result": auth
+    })
+
+def logout(request):
+    name_fields = ["username", "authenticator"]
+    if any(map(lambda k: k not in request.POST, name_fields)):
+        return JsonResponse({
+            "ok": False,
+            "message": "Missing a required field: (one of {})".format(required_fields)
+        })
+    u = User.objects.filter(username = request.POST["username"])
+    if not u.exists():
+        return JsonResponse({
+            "ok": False,
+            "message": "User {} does not exists".format(request.POST["username"])
+        })
+
+    return JsonResponse({
+        "ok": True
+    })

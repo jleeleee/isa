@@ -86,3 +86,36 @@ def create_listing(request):
         "seller": request.POST.get("seller", None)
     }
     return send_data_to_models("listings/create", data)
+
+def login(request):
+    try:
+        req = urllib.request.Request("http://models:8000/api/v1/users/login")
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+    except urllib.error.HTTPError as e:
+        return JsonResponse({
+            "ok": "False",
+            "error": str(e.reason),
+            "str": str(e)
+        })
+
+    return JsonResponse({
+        "ok": True,
+        "authenticator": resp["result"]
+    })
+
+def logout(request):
+    try:
+        req = urllib.request.Request("http://models:8000/api/v1/users/logout")
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        resp = json.loads(resp_json)
+    except urllib.error.HTTPError as e:
+        return JsonResponse({
+            "ok": "False",
+            "error": str(e.reason),
+            "str": str(e)
+        })
+
+    return JsonResponse({
+        "ok": True
+    })
