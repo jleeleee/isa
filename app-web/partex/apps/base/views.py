@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from . import forms
 
@@ -86,7 +86,7 @@ def listing_create(request):
         if form.is_valid():
             response = forms.send_to_exp(request, form, "listing/create")
             # return HttpResponseRedirect(reverse("listing", kwargs={"id": repons.id})
-            return HttpResponse("Sent")
+            return HttpResponse(str(response))
     else:
         form = forms.ListingCreationForm()
 

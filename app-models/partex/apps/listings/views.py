@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
+from ...utils import check_auth
 from .models import Listing
 from ..users.models import User
 
@@ -26,11 +27,17 @@ def info(request, id_):
 
 @require_http_methods(["POST"])
 def create(request):
-    required_fields = ["name", "price", "seller"]
+    required_fields = ["name", "price", "seller", "auth", "user_id"]
     if any(map(lambda k: k not in request.POST, required_fields)):
         return JsonResponse({
             "ok": False,
             "message": "Missing a required field: (one of {})".format(required_fields)
+        })
+
+    if not check_auth(request.POST["auth"], request.POST["user_id"]):
+        return JsonResponse({
+            "ok": False,
+            "message": "Authentication failed"
         })
 
     lst = Listing.objects.create(
