@@ -22,8 +22,8 @@ from .apps.base import views as base
 
 urlpatterns = [
     path('', base.index, name="homepage"),
-    path('listing/<int:_id>', base.listing, name="listing"),
+    path('listings/<int:_id>', base.listing, name="listing"),
+    path('listings/create', base.listing_create, name="create_listing"),
     path('listings', base.listing_index, name="listings"),
-    path('about', base.about, name="about"),
-    path('create_listing', base.create_listing, name="create_listing")
+    path('about', base.about, name="about")
 ]  + static(settings.STATIC_URL, document_root="partex/static")

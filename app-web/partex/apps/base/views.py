@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from . import forms
 import urllib.request
 import urllib.parse
 import json
@@ -30,7 +31,7 @@ def listing(request, _id):
     context = {}
 
     try:
-        req = urllib.request.Request("http://exp:8000/api/v1/listing/{}".format(_id))
+        req = urllib.request.Request("http://exp:8000/api/v1/listings/{}".format(_id))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
@@ -70,18 +71,23 @@ def listing_index(request):
     }
     return render(request, "listing_index.html", context)
 
-def create_listing(request):
-    # TODO: Add in auth later
-    """
-    auth = request.COOKIES.get('aut')
-    
+def listing_create(request):
+    auth = request.COOKIES.get('auth')
+
     # If authenticator cookie wasn't set:
     if not auth:
         return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
-    """
-    
-    if request.method == 'GET':
-        return render(request, "create_listing.html", {})
+
+    if request.method == 'POST':
+        form = ListingCreationForm(request.POST)
+        if form.is_valid():
+            response = send_to_exp(form, "listing/create")
+            # return HttpResponseRedirect(reverse("listing", kwargs={"id": repons.id})
+            return HttpResponse("Sent")
+    else:
+        form = ListingCreationForm()
+
+    return render(request, "create_listing.html", {})
 
 def about(request):
     return render(request, "about.html", {})
