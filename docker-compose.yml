@@ -12,7 +12,7 @@ services:
     volumes:
       - ./app-models:/app
     ports:
-      - "8001:8000"
+      - "8002:8000"
     command:
       # bash -c "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
       bash -c "python /app/manage.py migrate &&
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./app-experience:/app
     ports:
-      - "8002:8000"
+      - "8001:8000"
     links:
       - models:models
     command:
