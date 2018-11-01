@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'partex.apps.experience'
+    'partex.apps.base'
 ]
 
 MIDDLEWARE = [
