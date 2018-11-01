@@ -18,7 +18,7 @@ def homepage(request):
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })
@@ -37,7 +37,7 @@ def listing(request, _id):
 
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })
@@ -66,7 +66,7 @@ def all_listings(request):
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })
@@ -94,7 +94,7 @@ def login(request):
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })
@@ -111,7 +111,7 @@ def logout(request):
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })

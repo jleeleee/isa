@@ -10,8 +10,6 @@ import json
 # Create your views here.
 
 def index(request):
-    context = {}
-
     try:
         req = urllib.request.Request("http://exp:8000/api/v1/home")
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -27,7 +25,20 @@ def index(request):
         "listings": resp["listings"]
     }
 
-    return render(request, "index.html", context)
+    return render(request, "index.html", {})
+
+def login(request):
+    if request.method == 'POST':
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            response = forms.send_to_exp(request, form, "login")
+            return HttpResponse("Sent")
+    else:
+        form = forms.LoginForm()
+
+    return render(request, "login.html", {
+        "form": form
+    })
 
 def listing(request, _id):
     context = {}
@@ -38,7 +49,7 @@ def listing(request, _id):
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })
@@ -63,7 +74,7 @@ def listing_index(request):
         resp = json.loads(resp_json)
     except urllib.error.HTTPError as e:
         return JsonResponse({
-            "ok": "False",
+            "ok": False,
             "error": str(e.reason),
             "str": str(e)
         })
