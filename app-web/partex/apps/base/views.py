@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
 from django.urls import reverse
 from . import forms
+
 import urllib.request
 import urllib.parse
 import json
@@ -76,19 +77,22 @@ def listing_create(request):
     auth = request.COOKIES.get('auth')
 
     # If authenticator cookie wasn't set:
+    """
     if not auth:
         return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
-
+    """
     if request.method == 'POST':
-        form = ListingCreationForm(request.POST)
+        form = forms.ListingCreationForm(request.POST)
         if form.is_valid():
             response = send_to_exp(request, form, "listing/create")
             # return HttpResponseRedirect(reverse("listing", kwargs={"id": repons.id})
             return HttpResponse("Sent")
     else:
-        form = ListingCreationForm()
+        form = forms.ListingCreationForm()
 
-    return render(request, "create_listing.html", {})
+    return render(request, "create_listing.html", {
+        "form": form
+    })
 
 def about(request):
     return render(request, "about.html", {})
