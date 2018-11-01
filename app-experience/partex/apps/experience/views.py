@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
 
+from .utils import send_data_to_models
+
 import urllib.request
 import urllib.parse
 import json
@@ -73,3 +75,14 @@ def all_listings(request):
         "ok": True,
         "listings": resp["result"]
     })
+
+@require_http_methods(["POST"])
+def create_listing(request):
+    rdata = request.POST
+    data = {
+        "auth": request.POST.get("auth", None),
+        "name": request.POST.get("name", None),
+        "price": request.POST.get("price", None),
+        "seller": request.POST.get("seller", None)
+    }
+    return send_data_to_models("listings/create", data)
