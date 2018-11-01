@@ -85,7 +85,7 @@ def create_listing(request):
         "price": request.POST.get("price", None),
         "seller": request.POST.get("seller", None)
     }
-    return send_data_to_models("listings/create", data)
+    return JsonResponse(send_data_to_models("listings/create", data))
 
 def login(request):
     try:
