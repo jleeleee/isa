@@ -27,4 +27,4 @@ def send_to_exp(path, form):
 
 class ListingCreationForm(forms.Form):
     name = forms.CharField(label='Name', max_length=200)
-    generic_description = forms.CharField(required=False, widget=forms.TextArea)
+    generic_description = forms.CharField(required=False, widget=forms.Textarea)
