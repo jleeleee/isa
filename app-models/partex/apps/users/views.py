@@ -3,7 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
-from .models import User
+from .models import User, Authenticator
 
 # Create your views here.
 
@@ -96,9 +96,10 @@ def login(request):
     if not u.exists():
         return JsonResponse({
             "ok": False,
-            "message": "User {} does not exists".format(request.POST["username"])
+            "message": "User {} does not exist".format(request.POST["username"])
         })
 
+    u = u.first()
     if not u.check_password(request.POST["password"]):
         return JsonResponse({
             "ok": False,
@@ -109,11 +110,11 @@ def login(request):
 
     return JsonResponse({
         "ok": True,
-        "result": auth
+        "auth": auth.authenticator
     })
 
 def logout(request):
-    name_fields = ["username", "authenticator"]
+    name_fields = ["username", "auth"]
     if any(map(lambda k: k not in request.POST, name_fields)):
         return JsonResponse({
             "ok": False,
@@ -123,7 +124,7 @@ def logout(request):
     if not u.exists():
         return JsonResponse({
             "ok": False,
-            "message": "User {} does not exists".format(request.POST["username"])
+            "message": "User {} does not exist".format(request.POST["username"])
         })
 
     return JsonResponse({

@@ -50,10 +50,14 @@ class Authenticator(models.Model):
             return False
         return True
 
-    def __init__(self, *args, **kwargs):
-        super(models.Model, self).__init__(*args, **kwargs)
-        self.authenticator = hmac.new(
-            key = settings.SECRET_KEY.encode('utf-8'),
-            msg = os.urandom(32),
-            digestmod = 'sha256',
-        ).hexdigest()
+    def __str__(self):
+        return "For {} {}".format(self.user.first_name, self.user.last_name)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.authenticator = hmac.new(
+                key = settings.SECRET_KEY.encode('utf-8'),
+                msg = os.urandom(32),
+                digestmod = 'sha256',
+            ).hexdigest()
+        super(Authenticator, self).save(*args, **kwargs)
