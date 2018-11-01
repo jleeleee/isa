@@ -70,5 +70,18 @@ def listing_index(request):
     }
     return render(request, "listing_index.html", context)
 
+def create_listing(request):
+    # TODO: Add in auth later
+    """
+    auth = request.COOKIES.get('aut')
+    
+    # If authenticator cookie wasn't set:
+    if not auth:
+        return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
+    """
+    
+    if request.method == 'GET':
+        return render(request, "create_listing.html", {})
+
 def about(request):
     return render(request, "about.html", {})

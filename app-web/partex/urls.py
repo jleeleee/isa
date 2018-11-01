@@ -24,5 +24,6 @@ urlpatterns = [
     path('', base.index, name="homepage"),
     path('listing/<int:_id>', base.listing, name="listing"),
     path('listings', base.listing_index, name="listings"),
-    path('about', base.about, name="about")
+    path('about', base.about, name="about"),
+    path('create_listing', base.create_listing, name="create_listing")
 ]  + static(settings.STATIC_URL, document_root="partex/static")

@@ -13,7 +13,10 @@ mysql-cli\n
 pull\n
 test\n
 stopdb\n
-stopserver
+stopserver\n
+dropdbuser\n
+dropdb\n
+makedb\n
 "
 
 ROOTPASS="\$3cureUS"
