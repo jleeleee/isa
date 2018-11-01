@@ -1,5 +1,9 @@
+import os
+import hmac
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.conf import settings
+from django.utils import timezone
 
 # Create your models here.
 
@@ -8,6 +12,8 @@ class User(AbstractBaseUser):
     #   reviews
     #   authored_reviews
     #   listings
+    #   authenticator
+
     username = models.CharField(max_length=40, unique=True)
     email = models.CharField(max_length=100, unique=True)
 
@@ -32,3 +38,22 @@ class User(AbstractBaseUser):
 
     def get_dict(self):
         return { d: getattr(self, d) for d in User.EXPOSED_FIELDS }
+
+class Authenticator(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="authenticator")
+    authenticator = models.CharField(max_length=64) # not primary key because not guaranteed unique
+
+    datetime_created = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        if timezone.now() - self.date_created > timezone.timedelta(days=+7):
+            return False
+        return True
+
+    def __init__(self, *args, **kwargs):
+        super(models.Model, self).__init__(*args, **kwargs)
+        self.authenticator = hmac.new(
+            key = settings.SECRET_KEY.encode('utf-8'),
+            msg = os.urandom(32),
+            digestmod = 'sha256',
+        ).hexdigest()
