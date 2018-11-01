@@ -90,7 +90,7 @@ def login(request):
     if any(map(lambda k: k not in request.POST, name_fields)):
         return JsonResponse({
             "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
+            "message": "Missing a required field: (one of {})".format(name_fields)
         })
     u = User.objects.filter(username = request.POST["username"])
     if not u.exists():
