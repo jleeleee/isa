@@ -42,7 +42,7 @@ def login(request):
         form = forms.LoginForm(request.POST)
         if form.is_valid():
             response = forms.send_to_exp(request, form, "login")
-            return HttpResponse("Sent")
+            return JsonResponse(response)
     else:
         form = forms.LoginForm()
 
