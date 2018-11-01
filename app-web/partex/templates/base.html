@@ -34,6 +34,13 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="nav-link" href="{% url 'create_listing' %}">Post a New Listing</a></li>
                     </ul>
+                    <ul class="nav navbar-nav navbar-right">
+					{% if is_logged_in %}
+						<li><a class="nav-link" href="{% url 'logout' %}">Log out</a></li>
+					{% else %}
+						<li><a class="nav-link" href="{% url 'login' %}">Login/Create Account</a></li>
+					{% endif %}
+                    </ul>
                 </div>
             </nav>
         </header>

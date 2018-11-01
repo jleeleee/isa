@@ -10,6 +10,11 @@ import json
 # Create your views here.
 
 def index(request):
+    auth = request.COOKIES.get('auth')
+    is_auth = True
+    if not auth:
+        is_auth = False
+
     try:
         req = urllib.request.Request("http://exp:8000/api/v1/home")
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -22,12 +27,17 @@ def index(request):
         })
 
     context = {
-        "listings": resp["listings"]
+        "listings": resp["listings"],
+        "is_logged_in": is_auth 
     }
 
     return render(request, "index.html", {})
 
 def login(request):
+    auth = request.COOKIES.get('auth')
+    if auth:
+        return HttpResponseRedirect(reverse("home")))
+
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
         if form.is_valid():
@@ -37,10 +47,16 @@ def login(request):
         form = forms.LoginForm()
 
     return render(request, "login.html", {
-        "form": form
+        "form": form,
+        "is_logged_in": False
     })
 
 def listing(request, _id):
+    auth = request.COOKIES.get('auth')
+    is_auth = True
+    if not auth:
+        is_auth = False
+
     context = {}
 
     try:
@@ -60,12 +76,18 @@ def listing(request, _id):
     context = {
         "listing": resp["listing"],
         "reviews": resp["reviews"],
-        "average_rating": average_rating
+        "average_rating": average_rating,
+        "is_logged_in": is_auth 
     }
 
     return render(request, "listing.html", context)
 
 def listing_index(request):
+    auth = request.COOKIES.get('auth')
+    is_auth = True
+    if not auth:
+        is_auth = False
+
     context = {}
 
     try:
@@ -80,7 +102,8 @@ def listing_index(request):
         })
 
     context = {
-        "listings": resp["listings"]
+        "listings": resp["listings"],
+        "is_logged_in": is_auth
     }
     return render(request, "listing_index.html", context)
 
@@ -88,10 +111,9 @@ def listing_create(request):
     auth = request.COOKIES.get('auth')
 
     # If authenticator cookie wasn't set:
-    """
     if not auth:
         return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing"))
-    """
+
     if request.method == 'POST':
         form = forms.ListingCreationForm(request.POST)
         if form.is_valid():
@@ -102,7 +124,8 @@ def listing_create(request):
         form = forms.ListingCreationForm()
 
     return render(request, "create_listing.html", {
-        "form": form
+        "form": form,
+        "is_logged_in": True
     })
 
 def about(request):
