@@ -11,9 +11,6 @@ import json
 
 def index(request):
     auth = request.COOKIES.get('auth')
-    is_auth = True
-    if not auth:
-        is_auth = False
 
     try:
         req = urllib.request.Request("http://exp:8000/api/v1/home")
@@ -28,7 +25,7 @@ def index(request):
 
     context = {
         "listings": resp["listings"],
-        "is_logged_in": is_auth 
+        "is_logged_in": not not auth
     }
 
     return render(request, "index.html", {})
@@ -36,7 +33,7 @@ def index(request):
 def login(request):
     auth = request.COOKIES.get('auth')
     if auth:
-        return HttpResponseRedirect(reverse("home")))
+        return HttpResponseRedirect(reverse("home"))
 
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
@@ -53,9 +50,6 @@ def login(request):
 
 def listing(request, _id):
     auth = request.COOKIES.get('auth')
-    is_auth = True
-    if not auth:
-        is_auth = False
 
     context = {}
 
@@ -77,16 +71,13 @@ def listing(request, _id):
         "listing": resp["listing"],
         "reviews": resp["reviews"],
         "average_rating": average_rating,
-        "is_logged_in": is_auth 
+        "is_logged_in": not not auth
     }
 
     return render(request, "listing.html", context)
 
 def listing_index(request):
     auth = request.COOKIES.get('auth')
-    is_auth = True
-    if not auth:
-        is_auth = False
 
     context = {}
 
@@ -103,7 +94,7 @@ def listing_index(request):
 
     context = {
         "listings": resp["listings"],
-        "is_logged_in": is_auth
+        "is_logged_in": not not auth
     }
     return render(request, "listing_index.html", context)
 

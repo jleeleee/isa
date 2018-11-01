@@ -22,6 +22,8 @@
                     </div>
                     <p>{{ l.description }}</p>
                 </div>
+            {% empty %}
+                <b>No recent listings!</b>
             {% endfor %}
         </div>
         <div class="col-md-6 mt-5">
