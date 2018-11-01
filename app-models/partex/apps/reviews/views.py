@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
@@ -24,7 +23,6 @@ def user_info(request, id_):
         "result": review.get_dict()
     })
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def user_create(request):
     required_fields = ["title", "rating", "body","author", "subject"]
@@ -80,7 +78,6 @@ def user_delete(request, id_):
         "ok": False
     })
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def user_update(request, id_):
     r = get_object_or_404(UserReview, id=id_)
@@ -136,7 +133,6 @@ def item_info(request, id_):
         ]
     })
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def item_create(request):
     required_fields = ["title", "rating", "body", "author", "subject"]
@@ -192,7 +188,6 @@ def item_delete(request, id_):
         "ok": False
     })
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def item_update(request, id_):
     r = get_object_or_404(ItemReview, id=id_)

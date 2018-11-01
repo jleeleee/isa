@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
@@ -24,7 +23,6 @@ def info(request, id_):
         "result": user.get_dict()
     })
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def create(request):
     required_fields = ["username", "first_name", "last_name", "password"]
@@ -69,7 +67,6 @@ def delete(request, id_):
         "ok": False
     })
 
-@csrf_exempt
 @require_http_methods(["POST"])
 def update(request, id_):
     u = get_object_or_404(User, id=id_)
