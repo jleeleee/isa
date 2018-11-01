@@ -5,6 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import User, Authenticator
 
+from ...utils import check_auth
+from ...utils import check_fields
+
 # Create your views here.
 
 def index(request):
@@ -26,18 +29,16 @@ def info(request, id_):
 @require_http_methods(["POST"])
 def create(request):
     required_fields = ["username", "first_name", "last_name", "password"]
-    if any(map(lambda k: k not in request.POST, required_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
-        })
+    try:
+        check_fields(request, required_fields)
+    except Exception as e:
+        return e
 
     if User.objects.filter(username=request.POST["username"]).exists():
         return JsonResponse({
             "ok": False,
             "message": "User with specified username already exists"
         })
-
 
     u = User.objects.create(
         username = request.POST["username"],
@@ -86,12 +87,12 @@ def update(request, id_):
     })
 
 def login(request):
-    name_fields = ["username", "password"]
-    if any(map(lambda k: k not in request.POST, name_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(name_fields)
-        })
+    required_fields = ["username", "password"]
+    try:
+        check_fields(request, required_fields)
+    except Exception as e:
+        return e
+
     u = User.objects.filter(username = request.POST["username"])
     if not u.exists():
         return JsonResponse({
@@ -110,22 +111,21 @@ def login(request):
 
     return JsonResponse({
         "ok": True,
-        "auth": auth.authenticator
+        "result": auth.get_authenticator()
     })
 
 def logout(request):
-    name_fields = ["username", "auth"]
-    if any(map(lambda k: k not in request.POST, name_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
-        })
-    u = User.objects.filter(username = request.POST["username"])
-    if not u.exists():
-        return JsonResponse({
-            "ok": False,
-            "message": "User {} does not exist".format(request.POST["username"])
-        })
+    required_fields = ["auth"]
+    try:
+        check_fields(request, required_fields)
+    except Exception as e:
+        return e
+
+    auth_dict = request.POST["auth"]
+    auth = Authenticator.objects.filter(authenticator=auth_dict.auth, user__id=auth_dict.user_id)
+
+    if auth.exists():
+        auth.delete()
 
     return JsonResponse({
         "ok": True
