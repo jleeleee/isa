@@ -4,11 +4,13 @@ import urllib.request
 import urllib.parse
 import json
 
-def send_to_exp(path, form):
+def send_to_exp(request, path, form):
     data = form.cleaned_data
     url = "http://exp:8000/api/v1/{}".format(path)
 
-    post_data = data # No modifications
+    post_data = data
+    post_data["user_id"] = request.COOKIES.get('user_id')
+    post_data["auth"] = request.COOKIES.get('auth')
 
     try:
         req = urllib.request.Request(url)
@@ -28,3 +30,4 @@ def send_to_exp(path, form):
 class ListingCreationForm(forms.Form):
     name = forms.CharField(label='Name', max_length=200)
     generic_description = forms.CharField(required=False, widget=forms.Textarea)
+    price = forms.DecimalField()
