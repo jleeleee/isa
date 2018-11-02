@@ -112,10 +112,9 @@ def login(request):
         "user_id": u.id
     })
 
-@required_fields(["auth"])
+@authentication_required
 def logout(request):
-    auth_dict = request.POST["auth"]
-    auth = Authenticator.objects.filter(authenticator=auth_dict.auth, user__id=auth_dict.user_id)
+    auth = Authenticator.objects.filter(authenticator=request.POST["auth"], user__id=request.POST["user_id"])
 
     if auth.exists():
         auth.delete()
