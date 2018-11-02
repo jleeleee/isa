@@ -24,6 +24,9 @@ def index(request):
             "str": str(e)
         })
 
+    if not resp["ok"]:
+        return HttpResponse(status=404)
+
     context = {
         "listings": resp["listings"]
     }
@@ -103,6 +106,9 @@ def listing(request, _id):
             "str": str(e)
         })
 
+    if not resp["ok"]:
+        return HttpResponse(status=404)
+
     reviews = resp["reviews"]
     if len(reviews) == 0:
         average_rating = None
@@ -128,6 +134,9 @@ def listing_index(request):
             "error": str(e.reason),
             "str": str(e)
         })
+
+    if not resp["ok"]:
+        return HttpResponse(status=404)
 
     context = {
         "listings": resp["listings"]
