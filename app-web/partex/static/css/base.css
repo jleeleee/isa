@@ -6,6 +6,10 @@ button[type='submit'] {
     margin-top: 10px;
 }
 
-input {
+input, textarea {
     display: block;
+}
+
+p {
+    word-wrap: break-word;
 }
