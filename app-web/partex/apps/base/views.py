@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from . import forms
+from .utils import send_to_exp
 
 import urllib.request
 import urllib.parse
@@ -25,7 +26,7 @@ def index(request):
 
     context = {
         "listings": resp["listings"],
-        "is_logged_in": not not auth
+        "is_logged_in": True
     }
 
     return render(request, "index.html", {})
@@ -33,16 +34,18 @@ def index(request):
 def login(request):
     auth = request.COOKIES.get('auth')
     if auth:
-        return HttpResponseRedirect(reverse("home"))
+        return HttpResponseRedirect(reverse("homepage"))
 
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
         if form.is_valid():
-            response = forms.send_to_exp(request, form, "login")
+            response = send_to_exp(request, form.cleaned_data, "login")["result"]
             next = request.GET.get("next", reverse("homepage"))
+
             http_resp = HttpResponseRedirect(next)
             http_resp.set_cookie("auth", response["auth"])
             http_resp.set_cookie("user_id", response["user_id"])
+
             return http_resp
     else:
         form = forms.LoginForm()
@@ -52,11 +55,20 @@ def login(request):
         "is_logged_in": False
     })
 
-def listing(request, _id):
+def logout(request):
     auth = request.COOKIES.get('auth')
+    if not auth:
+        return HttpResponseRedirect(reverse("homepage"))
 
-    context = {}
+    resp = HttpResponseRedirect(reverse("homepage"))
+    resp.set_cookie("auth", "")
+    resp.set_cookie("user_id", "")
 
+    send_to_exp(request, {}, "logout")
+
+    return resp
+
+def listing(request, _id):
     try:
         req = urllib.request.Request("http://exp:8000/api/v1/listings/{}".format(_id))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -74,17 +86,12 @@ def listing(request, _id):
     context = {
         "listing": resp["listing"],
         "reviews": resp["reviews"],
-        "average_rating": average_rating,
-        "is_logged_in": not not auth
+        "average_rating": average_rating
     }
 
     return render(request, "listing.html", context)
 
 def listing_index(request):
-    auth = request.COOKIES.get('auth')
-
-    context = {}
-
     try:
         req = urllib.request.Request("http://exp:8000/api/v1/all_listings")
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -97,8 +104,7 @@ def listing_index(request):
         })
 
     context = {
-        "listings": resp["listings"],
-        "is_logged_in": not not auth
+        "listings": resp["listings"]
     }
     return render(request, "listing_index.html", context)
 
@@ -112,15 +118,14 @@ def listing_create(request):
     if request.method == 'POST':
         form = forms.ListingCreationForm(request.POST)
         if form.is_valid():
-            response = forms.send_to_exp(request, form, "listings/create")
+            response = send_to_exp(request, form.cleaned_data, "listings/create")
             # return HttpResponseRedirect(reverse("listing", kwargs={"id": repons.id})
             return HttpResponse(str(response))
     else:
         form = forms.ListingCreationForm()
 
     return render(request, "create_listing.html", {
-        "form": form,
-        "is_logged_in": True
+        "form": form
     })
 
 def about(request):

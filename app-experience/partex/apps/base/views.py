@@ -89,14 +89,14 @@ def create_listing(request):
 
 def login(request):
     data = {
-        "username": request.POST.get("username", None),
-        "password": request.POST.get("password", None)
+        "username":   request.POST.get("username", None),
+        "password":   request.POST.get("password", None)
     }
     return JsonResponse(send_data_to_models("users/login", data))
 
 def logout(request):
     data = {
-        "username": request.POST.get("username", None),
-        "auth":     request.POST.get("auth", None),
+        "user_id": request.POST.get("user_id", None),
+        "auth":    request.POST.get("auth",    None)
     }
     return JsonResponse(send_data_to_models("users/logout", data))
