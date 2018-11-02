@@ -23,6 +23,7 @@ apipatterns = [
     path('all_listings', views.all_listings),
     path('listings/<int:_id>', views.listing),
     path('listings/create', views.create_listing),
+    path('register', views.register),
     path('login', views.login),
     path('logout', views.logout)
 ]

@@ -22,6 +22,7 @@ from .apps.base import views as base
 
 urlpatterns = [
     path('', base.index, name="homepage"),
+    path('register', base.register, name="register"),
     path('login', base.login, name="login"),
     path('logout', base.logout, name="logout"),
     path('listings/<int:_id>', base.listing, name="listing"),

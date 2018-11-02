@@ -43,9 +43,13 @@ def create(request):
     u.set_password(request.POST["password"])
     u.save()
 
+    auth = Authenticator.objects.create(user=u)
+
     return JsonResponse({
         "ok": True,
-        "result": u.get_dict()
+        "result": u.get_dict(),
+        "auth": auth.authenticator,
+        "user_id": u.id
     })
 
 def delete(request, id_):

@@ -89,6 +89,16 @@ def create_listing(request):
     }
     return JsonResponse(send_data_to_models("listings/create", data))
 
+def register(request):
+    data = {
+        "first_name": request.POST.get("first_name", None),
+        "last_name":  request.POST.get("last_name", None),
+        "username":   request.POST.get("username", None),
+        "password":   request.POST.get("password", None),
+        "email":      request.POST.get("email", None)
+    }
+    return JsonResponse(send_data_to_models("users/create", data))
+
 def login(request):
     data = {
         "username":   request.POST.get("username", None),
