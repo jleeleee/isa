@@ -1,9 +1,10 @@
 from .apps.users.models import Authenticator
+from django.http import JsonResponse
 
 def authentication_required(view):
     def view_auth(request, *args, **kwargs):
-        auth_token = request.POST["auth"]
-        user_id = request.POST["user_id"]
+        auth_token = request.POST.get("auth")
+        user_id = request.POST.get("user_id")
         authentication_failed = JsonResponse({
             "ok": False,
             "message": "Authentication failed"
@@ -11,7 +12,7 @@ def authentication_required(view):
         if auth_token == None or user_id == None:
             return authentication_failed
         res = Authenticator.objects.filter(authenticator=auth_token, user__id=user_id)
-        if not res.exists() or res.is_expired():
+        if not res.exists() or res.first().is_expired():
             return authentication_failed
         return view(request, *args, **kwargs)
     return view_auth

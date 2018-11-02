@@ -25,11 +25,10 @@ def index(request):
         })
 
     context = {
-        "listings": resp["listings"],
-        "is_logged_in": True
+        "listings": resp["listings"]
     }
 
-    return render(request, "index.html", {})
+    return render(request, "index.html", context)
 
 def login(request):
     auth = request.COOKIES.get('auth')
@@ -52,8 +51,7 @@ def login(request):
         form = forms.LoginForm()
 
     return render(request, "login.html", {
-        "form": form,
-        "is_logged_in": False
+        "form": form
     })
 
 def logout(request):
@@ -82,7 +80,10 @@ def listing(request, _id):
         })
 
     reviews = resp["reviews"]
-    average_rating = sum([r["rating"] for r in reviews])/len(reviews)
+    if len(reviews) == 0:
+        average_rating = None
+    else:
+        average_rating = sum([r["rating"] for r in reviews])/len(reviews)
 
     context = {
         "listing": resp["listing"],
@@ -120,8 +121,7 @@ def listing_create(request):
         form = forms.ListingCreationForm(request.POST)
         if form.is_valid():
             response = send_to_exp(request, form.cleaned_data, "listings/create")
-            # return HttpResponseRedirect(reverse("listing", kwargs={"id": repons.id})
-            return HttpResponse(str(response))
+            return HttpResponseRedirect(reverse("listing", kwargs={"_id": response["result"]["id"]}))
     else:
         form = forms.ListingCreationForm()
 

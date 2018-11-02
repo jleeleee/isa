@@ -49,7 +49,7 @@ def listing(request, _id):
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
         reviews = json.loads(resp_json)["result"]
 
-    except urllib.error.HTTPError as e:
+    except (urllib.error.HTTPError, KeyError) as e:
         reviews = []
 
     return JsonResponse({

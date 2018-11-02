@@ -30,9 +30,11 @@
                 <div class="col-sm-6">
                     <h3>Item Reviews</h3>
                 </div>
-                <div class="col-sm-6" style="padding-top: 8px;text-align:right">
-                    <h5>Average Rating: {{ average_rating }} </h5>
-                </div>
+                {% if average_rating %}
+                    <div class="col-sm-6" style="padding-top: 8px;text-align:right">
+                        <h5>Average Rating: {{ average_rating }} </h5>
+                    </div>
+                {% endif %}
             </div>
         </div>
         <div class="col-md-12 review">
@@ -42,6 +44,8 @@
                 <p  class="review-rating"> {{ r.rating }} </p>
                 <p  class="review-date"> {{ r.date }} </p>
                 {{ r.body }}
+            {% empty %}
+                <b>No reviews to display</b>
             {% endfor %}
         </div>
     </div>

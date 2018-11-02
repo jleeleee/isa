@@ -46,9 +46,7 @@ class Authenticator(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True)
 
     def is_expired(self):
-        if timezone.now() - self.date_created > timezone.timedelta(days=+7):
-            return False
-        return True
+        return self.datetime_created + timezone.timedelta(days=+7) < timezone.now()
 
     def __str__(self):
         return "For {} {}".format(self.user.first_name, self.user.last_name)
