@@ -7,6 +7,9 @@ from .models import ItemReview, UserReview
 from ..users.models import User
 from ..listings.models import AbstractItem
 
+from ...utils import authentication_required
+from ...utils import required_fields
+
 # UserReview Views
 def user_index(request):
     return JsonResponse({
@@ -24,13 +27,9 @@ def user_info(request, id_):
     })
 
 @require_http_methods(["POST"])
+@authentication_required
+@required_fields(["title", "rating", "body","author", "subject"])
 def user_create(request):
-    required_fields = ["title", "rating", "body","author", "subject"]
-    try:
-        check_fields(request, required_fields)
-    except Exception as e:
-        return e
-
     author = User.objects.filter(id=request.POST["author"])
     if author.exists():
         author = author.first()
@@ -62,6 +61,7 @@ def user_create(request):
         "result": r.get_dict(),
         })
 
+@authentication_required
 def user_delete(request, id_):
     r = UserReview.objects.filter(id=id_)
     if r.exists():
@@ -78,6 +78,7 @@ def user_delete(request, id_):
     })
 
 @require_http_methods(["POST"])
+@authentication_required
 def user_update(request, id_):
     r = get_object_or_404(UserReview, id=id_)
 
@@ -133,13 +134,9 @@ def item_info(request, id_):
     })
 
 @require_http_methods(["POST"])
+@authentication_required
+@required_fields(["title", "rating", "body", "author", "subject"])
 def item_create(request):
-    required_fields = ["title", "rating", "body", "author", "subject"]
-    try:
-        check_fields(request, required_fields)
-    except Exception as e:
-        return e
-
     author = User.objects.filter(id=request.POST["author"])
     if author.exists():
         author = author.first()
@@ -171,6 +168,7 @@ def item_create(request):
         "result": r.get_dict(),
         })
 
+@authentication_required
 def item_delete(request, id_):
     r = ItemReview.objects.filter(id=id_)
     if r.exists():
@@ -187,6 +185,7 @@ def item_delete(request, id_):
     })
 
 @require_http_methods(["POST"])
+@authentication_required
 def item_update(request, id_):
     r = get_object_or_404(ItemReview, id=id_)
 
