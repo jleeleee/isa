@@ -101,7 +101,8 @@ def login(request):
 
     return JsonResponse({
         "ok": True,
-        "result": auth.get_authenticator()
+        "auth": auth.authenticator,
+        "user_id": u.id
     })
 
 @required_fields(["auth"])

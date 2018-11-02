@@ -39,14 +39,15 @@ def login(request):
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)
         if form.is_valid():
-            response = send_to_exp(request, form.cleaned_data, "login")["result"]
-            next = request.GET.get("next", reverse("homepage"))
+            response = send_to_exp(request, form.cleaned_data, "login")
+            if response["ok"]:
+                next = request.GET.get("next", reverse("homepage"))
 
-            http_resp = HttpResponseRedirect(next)
-            http_resp.set_cookie("auth", response["auth"])
-            http_resp.set_cookie("user_id", response["user_id"])
+                http_resp = HttpResponseRedirect(next)
+                http_resp.set_cookie("auth", response["auth"])
+                http_resp.set_cookie("user_id", response["user_id"])
 
-            return http_resp
+                return http_resp
     else:
         form = forms.LoginForm()
 

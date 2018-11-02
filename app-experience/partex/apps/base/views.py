@@ -80,10 +80,11 @@ def all_listings(request):
 def create_listing(request):
     rdata = request.POST
     data = {
-        "auth":   request.POST.get("auth", None),
-        "name":   request.POST.get("name", None),
-        "price":  request.POST.get("price", None),
-        "seller": request.POST.get("seller", None)
+        "auth":    request.POST.get("auth", None),
+        "name":    request.POST.get("name", None),
+        "price":   request.POST.get("price", None),
+        "seller":  request.POST.get("user_id", None),
+        "user_id": request.POST.get("user_id", None)
     }
     return JsonResponse(send_data_to_models("listings/create", data))
 

@@ -61,6 +61,3 @@ class Authenticator(models.Model):
                 digestmod = 'sha256',
             ).hexdigest()
         super(Authenticator, self).save(*args, **kwargs)
-
-    def get_authenticator(self):
-        return { "user_id": self.user.id, "auth": self.authenticator }
