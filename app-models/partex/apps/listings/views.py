@@ -33,7 +33,8 @@ def create(request):
     lst = Listing.objects.create(
         name = request.POST["name"],
         price = request.POST["price"],
-        seller = User.objects.get(id=request.POST["seller"])
+        seller = User.objects.get(id=request.POST["seller"]),
+        description = request.POST["description"]
         )
 
     lst.save()

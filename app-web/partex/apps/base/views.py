@@ -121,7 +121,8 @@ def listing_create(request):
         form = forms.ListingCreationForm(request.POST)
         if form.is_valid():
             response = send_to_exp(request, form.cleaned_data, "listings/create")
-            return HttpResponseRedirect(reverse("listing", kwargs={"_id": response["result"]["id"]}))
+            if response["ok"]:
+                return HttpResponseRedirect(reverse("listing", kwargs={"_id": response["result"]["id"]}))
     else:
         form = forms.ListingCreationForm()
 

@@ -15,6 +15,6 @@ def send_data_to_models(path, data):
         return resp
     except urllib.error.HTTPError as e:
         return {
-            "success": False,
+            "ok": False,
             "response": str(e.reason)
         }

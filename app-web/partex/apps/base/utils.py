@@ -19,6 +19,6 @@ def send_to_exp(request, data, path):
         return resp
     except urllib.error.HTTPError as e:
         return {
-            "success": False,
+            "ok": False,
             "response": str(e.reason)
         }
