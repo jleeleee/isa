@@ -35,6 +35,7 @@ def index(request):
 
 def register(request):
     auth = request.COOKIES.get('auth')
+    context = {}
     if auth:
         return HttpResponseRedirect(reverse("homepage"))
 
@@ -50,15 +51,17 @@ def register(request):
                 http_resp.set_cookie("user_id", response["user_id"])
 
                 return http_resp
+            elif response['response'] == 'Forbidden':
+                return HttpResponseRedirect(reverse("logout"))
     else:
         form = forms.RegisterForm()
+        context['form'] = form
 
-    return render(request, "register.html", {
-        "form": form
-    })
+    return render(request, "register.html", context)
 
 def login(request):
     auth = request.COOKIES.get('auth')
+    context = {}
     if auth:
         return HttpResponseRedirect(reverse("homepage"))
 
@@ -74,12 +77,13 @@ def login(request):
                 http_resp.set_cookie("user_id", response["user_id"])
 
                 return http_resp
+            elif response['response'] == 'Forbidden':
+                return HttpResponseRedirect(reverse("logout"))
     else:
         form = forms.LoginForm()
+        context['form'] = form
 
-    return render(request, "login.html", {
-        "form": form
-    })
+    return render(request, "login.html", context)
 
 def logout(request):
     auth = request.COOKIES.get('auth')
@@ -145,6 +149,7 @@ def listing_index(request):
 
 def listing_create(request):
     auth = request.COOKIES.get('auth')
+    context = {}
 
     # If authenticator cookie wasn't set:
     if not auth:
@@ -156,12 +161,13 @@ def listing_create(request):
             response = send_to_exp(request, form.cleaned_data, "listings/create")
             if response["ok"]:
                 return HttpResponseRedirect(reverse("listing", kwargs={"_id": response["result"]["id"]}))
+            elif response['response'] == 'Forbidden':
+                return HttpResponseRedirect(reverse("logout"))
     else:
         form = forms.ListingCreationForm()
+        context['form'] = form
 
-    return render(request, "create_listing.html", {
-        "form": form
-    })
+    return render(request, "create_listing.html", context)
 
 def about(request):
     return render(request, "about.html", {})
