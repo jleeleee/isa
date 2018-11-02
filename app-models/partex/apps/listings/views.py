@@ -3,7 +3,8 @@ from django.views.decorators.http import require_http_methods
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.forms import UserCreationForm
 
-from ...utils import check_auth
+from ...utils import authentication_required
+from ...utils import required_fields
 from .models import Listing
 from ..users.models import User
 
@@ -26,20 +27,9 @@ def info(request, id_):
     })
 
 @require_http_methods(["POST"])
+@authentication_required
+@required_fields(["name", "price", "seller"])
 def create(request):
-    required_fields = ["name", "price", "seller", "auth", "user_id"]
-    if any(map(lambda k: k not in request.POST, required_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
-        })
-
-    if not check_auth(request.POST["auth"], request.POST["user_id"]):
-        return JsonResponse({
-            "ok": False,
-            "message": "Authentication failed"
-        })
-
     lst = Listing.objects.create(
         name = request.POST["name"],
         price = request.POST["price"],
@@ -53,6 +43,7 @@ def create(request):
         "result": lst.get_dict()
     })
 
+@authentication_required
 def delete(request, id_):
     lst = Listing.objects.filter(id=id_)
     if lst.exists():
@@ -69,6 +60,7 @@ def delete(request, id_):
     })
 
 @require_http_methods(["POST"])
+@authentication_required
 def update(request, id_):
     lst = get_object_or_404(Listing, id=id_)
 
@@ -88,14 +80,8 @@ def update(request, id_):
     })
 
 @require_http_methods(["POST"])
+@required_fields(["name"])
 def create_abstract(request):
-    required_fields = ["name"]
-    if any(map(lambda k: k not in request.POST, required_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
-        })
-
     item = AbstractItem.objects.create(
         name = request.POST["name"]
         )

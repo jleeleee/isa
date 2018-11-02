@@ -26,11 +26,10 @@ def user_info(request, id_):
 @require_http_methods(["POST"])
 def user_create(request):
     required_fields = ["title", "rating", "body","author", "subject"]
-    if any(map(lambda k: k not in request.POST, required_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
-        })
+    try:
+        check_fields(request, required_fields)
+    except Exception as e:
+        return e
 
     author = User.objects.filter(id=request.POST["author"])
     if author.exists():
@@ -136,11 +135,10 @@ def item_info(request, id_):
 @require_http_methods(["POST"])
 def item_create(request):
     required_fields = ["title", "rating", "body", "author", "subject"]
-    if any(map(lambda k: k not in request.POST, required_fields)):
-        return JsonResponse({
-            "ok": False,
-            "message": "Missing a required field: (one of {})".format(required_fields)
-        })
+    try:
+        check_fields(request, required_fields)
+    except Exception as e:
+        return e
 
     author = User.objects.filter(id=request.POST["author"])
     if author.exists():

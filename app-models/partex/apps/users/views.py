@@ -5,8 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import User, Authenticator
 
-from ...utils import check_auth
-from ...utils import check_fields
+from ...utils import authentication_required
+from ...utils import required_fields
 
 # Create your views here.
 
@@ -27,13 +27,8 @@ def info(request, id_):
     })
 
 @require_http_methods(["POST"])
+@required_fields(["username", "first_name", "last_name", "password"])
 def create(request):
-    required_fields = ["username", "first_name", "last_name", "password"]
-    try:
-        check_fields(request, required_fields)
-    except Exception as e:
-        return e
-
     if User.objects.filter(username=request.POST["username"]).exists():
         return JsonResponse({
             "ok": False,
@@ -86,13 +81,8 @@ def update(request, id_):
         "result": u.get_dict()
     })
 
+@required_fields(["username", "password"])
 def login(request):
-    required_fields = ["username", "password"]
-    try:
-        check_fields(request, required_fields)
-    except Exception as e:
-        return e
-
     u = User.objects.filter(username = request.POST["username"])
     if not u.exists():
         return JsonResponse({
@@ -114,13 +104,8 @@ def login(request):
         "result": auth.get_authenticator()
     })
 
+@required_fields(["auth"])
 def logout(request):
-    required_fields = ["auth"]
-    try:
-        check_fields(request, required_fields)
-    except Exception as e:
-        return e
-
     auth_dict = request.POST["auth"]
     auth = Authenticator.objects.filter(authenticator=auth_dict.auth, user__id=auth_dict.user_id)
 
