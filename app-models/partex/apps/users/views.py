@@ -27,19 +27,22 @@ def info(request, id_):
     })
 
 @require_http_methods(["POST"])
-@required_fields(["username", "first_name", "last_name", "password"])
+@required_fields(["username", "first_name", "last_name", "password", "email"])
 def create(request):
-    if User.objects.filter(username=request.POST["username"]).exists():
+    if (User.objects.filter(username=request.POST["username"]).exists() or
+        User.objects.filter(email=request.POST["email"]).exists()):
         return JsonResponse({
             "ok": False,
-            "message": "User with specified username already exists"
+            "message": "User with specified username or email already exists"
         })
 
     u = User.objects.create(
         username = request.POST["username"],
         first_name = request.POST["first_name"],
-        last_name = request.POST["last_name"]
+        last_name = request.POST["last_name"],
+        email = request.POST["email"]
         )
+
     u.set_password(request.POST["password"])
     u.save()
 

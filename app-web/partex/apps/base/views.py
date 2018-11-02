@@ -35,10 +35,10 @@ def index(request):
 
 def register(request):
     auth = request.COOKIES.get('auth')
-
     if auth:
         return HttpResponseRedirect(reverse("homepage"))
 
+    error = ""
     if request.method == 'POST':
         form = forms.RegisterForm(request.POST)
         if form.is_valid():
@@ -51,16 +51,21 @@ def register(request):
                 http_resp.set_cookie("user_id", response["user_id"])
 
                 return http_resp
+            elif "response" in response and response['response'] == 'Forbidden':
+                return HttpResponseRedirect(reverse("logout"))
+            else:
+                if "message" in response:
+                    error = response["message"]
     else:
         form = forms.RegisterForm()
 
     return render(request, "register.html", {
-        "form": form
+        "form": form,
+        "error": error
     })
 
 def login(request):
     auth = request.COOKIES.get('auth')
-
     if auth:
         return HttpResponseRedirect(reverse("homepage"))
 
