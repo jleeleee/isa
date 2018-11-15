@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 
 from .apps.base import views
+from .apps.search import search
 
 apipatterns = [
     path('home', views.homepage),
     path('all_listings', views.all_listings),
     path('listings/<int:_id>', views.listing),
     path('listings/create', views.create_listing),
+    path('listings/search', search.listings),
     path('register', views.register),
     path('login', views.login),
     path('logout', views.logout)
