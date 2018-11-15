@@ -3,6 +3,31 @@
 version: '3'
 
 services:
+  kafka:
+    image: spotify/kafka
+    container_name: kafka
+    network_mode: default
+    environment:
+       ADVERTISED_HOST: kafka
+       ADVERTISED_PORT: 9092
+    hostname: kafka
+
+  es:
+    image: elasticsearch:2.0
+    container_name: es
+    network_mode: default
+    ports:
+      - "9200:9200"
+
+  batch:
+    image: tp33/django
+    container_name: batch
+    network_mode: default
+    links:
+      - kafka:kafka
+      - es:es
+        #command: python batch.py
+
   models:
     image: tp33/django
     container_name: models
@@ -21,6 +46,7 @@ services:
       python /app/manage.py loaddata /app/partex/db/fixtures/reviews.json &&
       mod_wsgi-express start-server --reload-on-changes /app/partex/wsgi.py"
       # /usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+
   exp:
     image: tp33/django
     container_name: exp
@@ -31,9 +57,12 @@ services:
       - "8001:8000"
     links:
       - models:models
+      - es:es
+      - kafka:kafka
     command:
       "mod_wsgi-express start-server /app/partex/wsgi.py"
       # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+
   web:
     image: tp33/django
     container_name: web
@@ -47,24 +76,3 @@ services:
     command:
       "mod_wsgi-express start-server /app/partex/wsgi.py"
       # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
-  kafka:
-    image: spotify/kafka
-    container_name: kafka
-    environment:
-       ADVERTISED_HOST: kafka
-       ADVERTISED_PORT: 9092
-    hostname: kafka
-
-  es:
-    image: elasticsearch:2.0
-    container_name: es
-    ports:
-      - "9200:9200"
-
-  batch:
-    image: tp33/django
-    container_name: batch
-    links:
-      - kafka:kafka
-      - es:es
-        #command: python batch.py
