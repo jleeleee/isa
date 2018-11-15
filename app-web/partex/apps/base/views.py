@@ -150,6 +150,18 @@ def listing_index(request):
     }
     return render(request, "listing_index.html", context)
 
+def listing_search(request):
+    q = request.GET.get('q')
+    if q is not None:
+        resp = send_to_exp(request, { 'q': q }, "listings/search")
+        if resp["ok"]:
+            return render(request, "search_results.html", resp["response"])
+
+    return render(request, "search.html", {
+        "q": q,
+        "type": "listing"
+    })
+
 def listing_create(request):
     auth = request.COOKIES.get('auth')
 

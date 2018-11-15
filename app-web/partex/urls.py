@@ -27,6 +27,7 @@ urlpatterns = [
     path('logout', base.logout, name="logout"),
     path('listings/<int:_id>', base.listing, name="listing"),
     path('listings/create', base.listing_create, name="create_listing"),
+    path('listings/search', base.listing_search, name="search_listing"),
     path('listings', base.listing_index, name="listings"),
     path('about', base.about, name="about")
 ]  + static(settings.STATIC_URL, document_root="partex/static")

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+{{ block.super }}
+{% endblock css %}
+
+{% block content %}
+<div class="row mt-5">
+	<div class="col-md-7">
+		<form method="GET">
+            <h4>Enter a query</h4>
+            <input name="q" type="text" placeholder="Query">
+            <button type="submit">Search</button>
+		</form>
+	</div>
+</div>
+{% endblock content %}

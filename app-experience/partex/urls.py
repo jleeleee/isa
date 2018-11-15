@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from .apps.base import views
-from .apps.search import search
+from .apps.search import views as search
 
 apipatterns = [
     path('home', views.homepage),

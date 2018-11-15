@@ -27,5 +27,7 @@ def listings(request):
     hits = [ h["_source"] for h in res["hits"] ]
     return JsonResponse({
         "ok": True,
-        "response": hits
+        "response": {
+            "hits": hits
+        }
     })
