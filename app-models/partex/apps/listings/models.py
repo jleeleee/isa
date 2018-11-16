@@ -21,6 +21,7 @@ class AbstractItem(models.Model):
     def average_reviews(self):
         return self.reviews.all().aggregate(models.Avg('rating'))
 
+
 class Listing(models.Model):
     EXPOSED_FIELDS = ["id", "name", "price", "status", "description", "date_created"]
     name = models.CharField(max_length=200)
@@ -50,3 +51,10 @@ class Listing(models.Model):
         if(self.base_item == None):
             return None
         return self.base_item.listings.all()
+
+    def indexing(self):
+        return {
+                'title': self.name,
+                'description': self.description,
+                'id': self.id
+                }

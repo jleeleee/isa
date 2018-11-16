@@ -44,7 +44,8 @@ services:
       python /app/manage.py loaddata /app/partex/db/fixtures/users.json &&
       python /app/manage.py loaddata /app/partex/db/fixtures/listings.json &&
       python /app/manage.py loaddata /app/partex/db/fixtures/reviews.json &&
-      mod_wsgi-express start-server --reload-on-changes /app/partex/wsgi.py"
+      mod_wsgi-express start-server --reload-on-changes /app/partex/wsgi.py &&
+      python /app/manage.py initindex"
       # /usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
 
   exp:
