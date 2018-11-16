@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'partex.apps.users',
     'partex.apps.listings',
     'partex.apps.reviews',
-    'partex.management'
+    'partex.apps'
 ]
 
 MIDDLEWARE = [

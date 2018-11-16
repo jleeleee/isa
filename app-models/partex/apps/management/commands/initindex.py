@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
-from ...partex.apps.listings.models import Listing
+from ...listings.models import Listing
 from elasticsearch import Elasticsearch
+from elasticsearch.helpers import bulk
 
 def get_fixtures(index, doc_type):
     all_listings = [lst.indexing() for lst in Listing.objects.all()]
@@ -15,7 +16,15 @@ def get_fixtures(index, doc_type):
 
 def init_index():
     es = Elasticsearch(['es'])
-    bulk(es, get_fixtures('listing_index', 'listing')
+    all_listings = [lst.get_dict() for lst in Listing.objects.all()]
+    for listing in all_listings:
+        es.index(index='listing_index',
+                 doc_type='listing',
+                 id=listing['id'],
+                 body=listing
+                 )
+    # bulk(es, get_fixtures('listing_index', 'listing'))
+    es.indices.refresh(index='listing_index')
 
 class Command(BaseCommand):
     def handle(self, **options):
