@@ -9,6 +9,8 @@ import urllib.request
 import urllib.parse
 import json
 
+from kafka import KafkaProducer
+
 # Create your views here.
 
 def homepage(request):
@@ -87,7 +89,19 @@ def create_listing(request):
         "user_id":     request.POST.get("user_id", None),
         "description": request.POST.get("description", None)
     }
-    return JsonResponse(send_data_to_models("listings/create", data))
+
+    response = send_data_to_models("listings/create", data)
+    if response["ok"]:
+        listing = response["result"]
+        listing = {
+            "name":        listing["name"],
+            "description": listing["description"],
+            "id":          listing["id"]
+        }
+        producer = KafkaProducer(bootstrap_servers='kafka:9092')
+        producer.send('new-listing-topic', json.dumps(listing).encode('utf-8'))
+
+    return JsonResponse(response)
 
 def register(request):
     data = {
