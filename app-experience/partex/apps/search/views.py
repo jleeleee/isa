@@ -6,6 +6,8 @@ import urllib.request
 import urllib.parse
 import json
 
+from django.http import JsonResponse
+
 # Create your views here.
 
 def listings(request):
@@ -24,7 +26,7 @@ def listings(request):
             "response": res
         })
 
-    hits = [ h["_source"] for h in res["hits"] ]
+    hits = [ h["_source"] for h in res["hits"]["hits"] ]
     return JsonResponse({
         "ok": True,
         "response": {
