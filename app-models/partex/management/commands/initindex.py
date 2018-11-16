@@ -5,7 +5,8 @@ from elasticsearch import Elasticsearch
 def get_fixtures(index, doc_type):
     all_listings = [lst.indexing() for lst in Listing.objects.all()]
     for lsting in all_listings:
-        yield: {
+        print(lsting)
+        yield {
             '_index': index,
             '_type': doc_type,
             '_id': lsting['id'],
@@ -19,3 +20,4 @@ def init_index():
 class Command(BaseCommand):
     def handle(self, **options):
         init_index()
+        print("done")

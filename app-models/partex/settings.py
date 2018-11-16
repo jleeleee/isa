@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'partex.apps.users',
     'partex.apps.listings',
-    'partex.apps.reviews'
+    'partex.apps.reviews',
+    'partex.management'
 ]
 
 MIDDLEWARE = [

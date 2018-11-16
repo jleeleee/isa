@@ -45,6 +45,10 @@ case $1 in
         docker-compose exec models /bin/bash -c \
             "python manage.py makemigrations"
         ;;
+	"initindex")
+		docker-compose exec models /bin/bash -c \
+			"python manage.py initindex"
+		;;
     "dropdbuser")
         docker exec -it mysql /bin/bash -c \
             "mysql -uroot -p'$ROOTPASS' -h localhost -e\"$DROPUSER\""
