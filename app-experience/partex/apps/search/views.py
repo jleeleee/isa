@@ -26,10 +26,12 @@ def listings(request):
             "response": res
         })
 
+    total = res["hits"]["total"]
     hits = [ h["_source"] for h in res["hits"]["hits"] ]
     return JsonResponse({
         "ok": True,
         "response": {
+            "total": total,
             "hits": hits
         }
     })

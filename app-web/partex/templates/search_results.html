@@ -3,13 +3,19 @@
 
 {% block css %}
 {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="row mt-5">
 	<div class="col-md-7">
+        Found a total of {{ total }} listing{% if total != 1 %}s{% endif %}.
         {% for h in hits %}
-            {{ h.title }}
+            <div class="search-result">
+                <h2> {{ h.name }} </h2>
+                <p> Description: {{ h.description }} </p>
+                <a class="btn btn-primary" href="{% url 'listing' h.id %}">Go to listing</a>
+            </div>
         {% endfor %}
 	</div>
 </div>
