@@ -99,7 +99,7 @@ def create_listing(request):
             "id":          listing["id"]
         }
         producer = KafkaProducer(bootstrap_servers='kafka:9092')
-        producer.send('new-listing-topic', json.dumps(listing).encode('utf-8'))
+        producer.send('new-listings-topic', json.dumps(listing).encode('utf-8'))
 
     return JsonResponse(response)
 
