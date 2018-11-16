@@ -153,7 +153,6 @@ def listing_index(request):
 def listing_search(request):
 
     search_error = False
-    no_results = False
 
     q = request.GET.get('q')
     if q is not None:
@@ -161,16 +160,14 @@ def listing_search(request):
         if not resp["ok"]:
             search_error = True
         else:
-            if resp["response"]["total"] == 0:
-                no_results = True
-            else:
-                return render(request, "search.html", resp["response"])
+            context = resp["response"]
+            context["got_results"] = True
+            return render(request, "search.html", context)
 
     return render(request, "search.html", {
         "q": q,
         "type": "listing",
-        "search_error": search_error,
-        "no_results": no_results
+        "search_error": search_error
     })
 
 def listing_create(request):

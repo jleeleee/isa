@@ -10,12 +10,9 @@
 <div class="row mt-5">
 	<div class="col-md-7">
         <p>
-            {% if no_results %}
-                No results found. Try a broader search.
-            {% endif %}
             {% if search_error %}
                 There was an error while performing your search.
-        {% endif %}
+            {% endif %}
         </p>
 		<form method="GET">
             <h4>Search listings</h4>
@@ -23,7 +20,7 @@
             <button type="submit">Search</button>
 		</form>
         <hr>
-        {% if hits %}
+        {% if got_results %}
             Found a total of {{ total }} listing{% if total != 1 %}s{% endif %}.
             {% for h in hits %}
                 <div class="search-result">
