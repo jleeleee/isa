@@ -23,10 +23,12 @@ services:
     image: tp33/django
     container_name: batch
     network_mode: default
+    volumes:
+      - ./batch:/batch
     links:
       - kafka:kafka
       - es:es
-        #command: python batch.py
+    command: python /batch/kafka_to_es.py
 
   models:
     image: tp33/django
