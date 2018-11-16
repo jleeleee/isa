@@ -3,22 +3,36 @@
 
 {% block css %}
 {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="row mt-5">
 	<div class="col-md-7">
-        {% if no_results %}
-            No results found. Try a broader search.
+        <p>
+            {% if no_results %}
+                No results found. Try a broader search.
+            {% endif %}
+            {% if search_error %}
+                There was an error while performing your search.
         {% endif %}
-        {% if search_error %}
-            There was an error while performing your search.
-        {% endif %}
+        </p>
 		<form method="GET">
             <h4>Search listings</h4>
             <input name="q" type="text" placeholder="Query">
             <button type="submit">Search</button>
 		</form>
+        <hr>
+        {% if hits %}
+            Found a total of {{ total }} listing{% if total != 1 %}s{% endif %}.
+            {% for h in hits %}
+                <div class="search-result">
+                    <h2> {{ h.name }} </h2>
+                    <p> Description: {{ h.description }} </p>
+                    <a class="btn btn-primary" href="{% url 'listing' h.id %}">Go to listing</a>
+                </div>
+            {% endfor %}
+        {% endif %}
 	</div>
 </div>
 {% endblock content %}

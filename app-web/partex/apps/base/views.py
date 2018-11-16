@@ -164,7 +164,7 @@ def listing_search(request):
             if resp["response"]["total"] == 0:
                 no_results = True
             else:
-                return render(request, "search_results.html", resp["response"])
+                return render(request, "search.html", resp["response"])
 
     return render(request, "search.html", {
         "q": q,
