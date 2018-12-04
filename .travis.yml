@@ -4,9 +4,7 @@ services:
 before_install:
   - docker-compose pull
   - ./admin.sh pull
-  - ./admin.sh mysql
-  - ./admin.sh makedbuser
-  - ./admin.sh makedb
+  - ./admin.sh newdb
   - docker-compose up
 
 language: python

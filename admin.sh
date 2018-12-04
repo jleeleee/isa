@@ -94,6 +94,15 @@ case $1 in
     *)
         echo -e $CMDS
         ;;
+    "newdb")
+        docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=$ROOTPASS -v $PWD/db:/var/lib/mysql mysql:5.7.23
+        echo "waiting for DB to start up..."
+        until [ $(docker inspect mysql --format '{{.State.Health.Status}}') == "healthy" ]
+        do 
+            sleep 10
+        done
+        ;;
+
 esac
 
 popd > /dev/null
