@@ -40,8 +40,6 @@ services:
       - ./app-models:/app
     ports:
       - "8002:8000"
-    links:
-      - es:es
     command:
       # bash -c "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
       bash -c "python /app/manage.py migrate &&
@@ -81,3 +79,21 @@ services:
     command:
       "mod_wsgi-express start-server /app/partex/wsgi.py"
       # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
+
+  selenium-chrome:
+    image: selenium/standalone-chrome
+    container_name: selenium-chrome
+    links:
+      - web:web
+    ports:
+      - "4444:4444"
+
+  selenium-test:
+    image: tp33/django
+    container_name: selenium-test
+    links:
+      - selenium-chrome:selenium-chrome
+      - web:web
+    volumes:
+      - ./selenium:/selenium
+    command: bash -c "pip install selenium==3.14.0 && python /selenium/do_nothing.py"
