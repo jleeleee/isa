@@ -10,4 +10,4 @@ before_install:
 language: python
 
 script: 
-  - admin.sh test
+  - ./admin.sh test
