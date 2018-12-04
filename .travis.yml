@@ -5,6 +5,8 @@ before_install:
   - docker-compose pull
   - ./admin.sh pull
   - ./admin.sh newdb
+  - ./admin.sh makedbuser
+  - ./admin.sh makedb
   - docker-compose up
 
 language: python
