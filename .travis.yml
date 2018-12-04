@@ -3,6 +3,7 @@ services:
 
 before_install:
   - docker-compose pull
+  - docker pull mysql:5.7.23
   - ./admin.sh pull
   - ./admin.sh newdb
   - ./admin.sh makedbuser

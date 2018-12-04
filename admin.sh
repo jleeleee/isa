@@ -99,6 +99,7 @@ case $1 in
 			printf "."
 			sleep 1
 		done
+		docker exec -i mysql mysql --user="root" --password="$ROOTPASS" --execute="$CREATEUSER; $CREATEDB"
 		;;
     *)
         echo -e $CMDS
