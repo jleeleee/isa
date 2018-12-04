@@ -30,6 +30,7 @@ DROPUSER="drop user 'www'@'%';"
 
 case $1 in
     "up")
+        docker-compose build
         docker-compose up
         ;;
     "models-cli")

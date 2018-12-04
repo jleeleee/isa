@@ -97,3 +97,12 @@ services:
     volumes:
       - ./selenium:/selenium
     command: bash -c "pip install selenium==3.14.0 && python /selenium/do_nothing.py"
+
+  lb:
+    build: lb
+    container_name: haproxy
+    network_mode: default
+    ports:
+      - "8888:80"
+    links:
+      - web:web
