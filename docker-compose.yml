@@ -97,7 +97,7 @@ services:
       - web:web
     volumes:
       - ./selenium:/selenium
-    command: bash -c "pip install selenium==3.14.0 && python /selenium/do_nothing.py"
+    command: bash -c "pip install selenium==3.14.0 && python /selenium/web_testing.py"
 
   lb:
     build: lb
