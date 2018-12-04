@@ -67,7 +67,7 @@ services:
       # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
 
   web:
-    image: tp33/django
+    build: app-web/
     container_name: web
     network_mode: default
     volumes:
@@ -76,6 +76,7 @@ services:
       - "8000:8000"
     links:
       - exp:partex-experience
+      - redis:redis
     command:
       "mod_wsgi-express start-server /app/partex/wsgi.py"
       # "/usr/bin/env python3 /app/manage.py runserver 0.0.0.0:8000"
@@ -106,3 +107,10 @@ services:
       - "8888:80"
     links:
       - web:web
+
+  redis:
+    image: redis
+    container_name: redis
+    network_mode: default
+    ports:
+      - "6379:6379"
