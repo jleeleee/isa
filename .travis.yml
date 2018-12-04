@@ -3,11 +3,11 @@ services:
 
 before_install:
   - docker-compose pull
-  - admin.sh pull
+  - ./admin.sh pull
   - docker-compose up
-  - admin.sh mysql
-  - admin.sh makedbuser
-  - admin.sh makedb
+  - ./admin.sh mysql
+  - ./admin.sh makedbuser
+  - ./admin.sh makedb
 
 language: python
 
