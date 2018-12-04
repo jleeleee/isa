@@ -4,8 +4,8 @@ services:
 before_install:
   - docker-compose pull
   - ./admin.sh pull
-  - docker-compose up
   - ./admin.sh mysql
+  - docker-compose up
   - ./admin.sh makedbuser
   - ./admin.sh makedb
 
