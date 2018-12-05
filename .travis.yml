@@ -12,3 +12,4 @@ language: python
 
 script: 
   - ./admin.sh test
+  - ./admin.sh seleniumtest
