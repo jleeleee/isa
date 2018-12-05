@@ -10,9 +10,15 @@ class SampleTest(unittest.TestCase):
             desired_capabilities=DesiredCapabilities.CHROME)
 
     # Add unit tests
-    def test_nothing(self):
+    def test_view_all_listings(self):
         driver = self.driver
         driver.get('http://web:8000/')
+        self.assertEqual(driver.title, "web")
+        listings_button = driver.find_elements_by_xpath('//*[@id]')
+        #print(listings_button)
+        for el in listings_button:
+            print(el.text)
+        self.assertEqual(driver.title, "listings")
 
     def tearDown(self):
         self.driver.quit()
