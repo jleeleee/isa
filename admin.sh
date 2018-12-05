@@ -18,7 +18,6 @@ dropdbuser\n
 dropdb\n
 makedb\n
 newdb\n
-seleniumtest\n
 "
 
 ROOTPASS="\$3cureUS"
@@ -102,9 +101,6 @@ case $1 in
 		done
 		docker exec -i mysql mysql --user="root" --password="$ROOTPASS" --execute="$CREATEUSER; $CREATEDB"
 		;;
-    "seleniumtest")
-        docker-compose up selenium-test
-        ;;
     *)
         echo -e $CMDS
         ;;
