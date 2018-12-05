@@ -84,7 +84,7 @@ services:
   selenium-chrome:
     image: selenium/standalone-chrome
     container_name: selenium-chrome
-    #network_mode: default
+    network_mode: default
     links:
       - web:web
     ports:
@@ -93,13 +93,13 @@ services:
   selenium-test:
     image: tp33/django
     container_name: selenium-test
-    #network_mode: default
+    network_mode: default
     links:
       - selenium-chrome:selenium-chrome
       - web:web
     volumes:
       - ./selenium:/selenium
-    command: bash -c "pip install selenium==3.14.0 && python /selenium/web_testing.py"
+    command: bash -c "pip install selenium==3.10.0 && python /selenium/web_testing.py"
 
   lb:
     build: lb

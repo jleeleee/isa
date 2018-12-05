@@ -11,17 +11,15 @@ class SampleTest(unittest.TestCase):
 
     # Add unit tests
     def test_view_all_listings(self):
-        driver = self.driver
-        driver.get('http://web:8000/')
-        self.assertEqual(driver.title, "web")
-        listings_button = driver.find_elements_by_xpath('//*[@id]')
-        #print(listings_button)
+        self.driver.get('http://web:8000/')
+        self.assertEqual(driver.title, "partex")
+
+        listings_button = self.driver.find_elements_by_xpath('//*[@id]')
         for el in listings_button:
             print(el.text)
-        self.assertEqual(driver.title, "listings")
 
     def tearDown(self):
         self.driver.quit()
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(warnings='ignore')
