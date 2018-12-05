@@ -24,9 +24,8 @@ class SampleTest(unittest.TestCase):
 
         listings_button = self.driver.find_elements_by_xpath('//a[text()="View all listings"]')
         listings_button[0].click()
-        listings_button = self.driver.find_elements_by_xpath('//a[text()="View all listings"]')
-
-        self.assertEqual(driver.title, "partex")
+        title_header = self.driver.find_elements_by_xpath('//h1[text()="All listings"]')
+        self.assertGreater(len(title_header), 0)
 
     def test_register(self):
         driver = self.driver
@@ -61,6 +60,21 @@ class SampleTest(unittest.TestCase):
         self.assertFalse("login" in driver.current_url)
 
 
+    def test_search(self):
+        driver = self.driver
+        driver.get('http://web:8000/')
+        self.assertEqual(driver.title, "partex")
+
+        search_button = self.driver.find_elements_by_xpath('//a[text()="Search"]')
+        search_button[0].click()
+        searchform = self.driver.find_elements_by_name('q')
+
+        self.assertGreater(len(searchform), 0)
+
+        searchform[0].send_keys("gtx\n")
+        results = self.driver.find_elements_by_class_name("search-result")
+        self.assertGreater(len(searchform), 0)
+        
     def tearDown(self):
         self.driver.quit()
 

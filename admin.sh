@@ -18,6 +18,7 @@ dropdbuser\n
 dropdb\n
 makedb\n
 newdb\n
+selenium-test\n
 "
 
 ROOTPASS="\$3cureUS"
@@ -82,6 +83,9 @@ case $1 in
     "test")
         docker exec -it models /bin/bash -c \
             "python manage.py test partex.apps"
+        ;;
+    "selenium-test")
+        docker-compose up selenium-test 
         ;;
     "stopserver")
         docker-compose rm models
