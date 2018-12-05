@@ -86,6 +86,7 @@ case $1 in
         ;;
     "selenium-test")
         docker-compose up selenium-test 
+        exit $?
         ;;
     "stopserver")
         docker-compose rm models
