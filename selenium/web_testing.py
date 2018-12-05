@@ -81,5 +81,5 @@ class SampleTest(unittest.TestCase):
         self.driver.quit()
 
 if __name__ == "__main__":
-    sleep(10)
+    sleep(5)
     unittest.main(warnings='ignore')

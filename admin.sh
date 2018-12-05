@@ -85,7 +85,7 @@ case $1 in
             "python manage.py test partex.apps"
         ;;
     "selenium-test")
-        docker-compose up selenium-test --exit-code-from selenium-test
+        docker-compose up --exit-code-from selenium-test selenium-test
         exit $?
         ;;
     "stopserver")
