@@ -75,8 +75,6 @@ class SampleTest(unittest.TestCase):
         results = self.driver.find_elements_by_class_name("search-result")
         self.assertGreater(len(searchform), 0)
 
-        self.assertFalse(True)
-        
     def tearDown(self):
         self.driver.quit()
 
