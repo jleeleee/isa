@@ -98,9 +98,9 @@ case $1 in
         docker rm mysql | sed 's/^/Removed: /g'
         ;;
     "newdb")
-        docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=$ROOTPASS -v $PWD/db:/var/lib/mysql --health-cmd="mysqladmin --silent ping" mysql:5.7.23        
-		while [ $(docker inspect --format "{{json .State.Health.Status }}" mysql) != "\"healthy\"" ] 
-		do 
+        docker run --name mysql -d -e MYSQL_ROOT_PASSWORD=$ROOTPASS -v $PWD/db:/var/lib/mysql --health-cmd="mysqladmin --silent ping" mysql:5.7.23
+		while [ $(docker inspect --format "{{json .State.Health.Status }}" mysql) != "\"healthy\"" ]
+		do
 			printf "."
 			sleep 1
 		done
