@@ -37,9 +37,22 @@
     margin-left: 5px;
 }
 
+.recommendations {
+    border-top: 1px gray solid;
+    border-bottom: 1px gray solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
 .review {
     border-top: 1px gray solid;
     border-bottom: 1px gray solid;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.recommendation {
+    border: 1px gray solid;
+    padding: 5px;
 }

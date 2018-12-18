@@ -12,7 +12,7 @@
             <h1>All listings</h1>
             {% for l in listings %}
                 <div class="listing">
-                    <h4><a href="{% url 'listing' l.id %}">{{ l.name }}</a></h3>
+                    <h4><a href="{% url 'listing' l.id %}">{{ l.name }}</a></h4>
                     <p>{{ l.description }}</p>
                 </div>
             {% endfor %}

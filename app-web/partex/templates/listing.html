@@ -25,6 +25,20 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12 recommendations">
+            <h3>Recommended items</h3>
+            {% for r in recommendations %}
+                <div class="col-md-3 recommendation">
+                    <h4 class="center"><a href="{% url 'listing' r.id %}">{{ r.name }}</a></h4>
+                    <h6> Seller: {{ r.seller_name }} </h4>
+                    <p> {{ r.description }} </p>
+                </div>
+            {% empty %}
+                <b>No recommendations to display</b>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-sm-6">

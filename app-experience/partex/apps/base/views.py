@@ -57,7 +57,8 @@ def listing(request, _id):
     return JsonResponse({
         "ok": True,
         "listing": listing["result"],
-        "reviews": reviews
+        "reviews": reviews,
+        "recommendations": [listing["result"]]
     })
 
 def all_listings(request):

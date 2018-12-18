@@ -125,7 +125,8 @@ def listing(request, _id):
     context = {
         "listing": resp["listing"],
         "reviews": resp["reviews"],
-        "average_rating": average_rating
+        "average_rating": average_rating,
+        "recommendations": resp["recommendations"]
     }
 
     return render(request, "listing.html", context)
