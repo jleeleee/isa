@@ -54,6 +54,10 @@ def listing(request, _id):
     except (urllib.error.HTTPError, KeyError) as e:
         reviews = []
 
+    if "user_id" in request.COOKIES:
+        producer = KafkaProducer(bootstrap_servers='kafka:9092')
+        producer.send('recommendations', json.dumps({"user_id": request.COOKIES.user_id, "item_id": listing["id"]}).encode('utf-8'))
+
     return JsonResponse({
         "ok": True,
         "listing": listing["result"],
