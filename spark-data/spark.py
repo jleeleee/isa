@@ -5,6 +5,15 @@ def write_to_db(data):
     db = MySQLdb.connect("db", "www", "$3cureUS", "cs4501")
     cursor = db.cursor()
     cursor.execute("USE cs4501")
+    cursor.execute("""
+        if not exists (select * from sysobjects where name='recommendations' and xtype='U')
+            create table recommendations (
+                Page int not null,
+                Recos varchar(255)
+            )
+        go
+    """)
+    cursor.execute("INSERT INTO recommendations(Page, Recos) VALUES ({}, {})".format(data))
 
 
 def create_co_views(data):
@@ -15,9 +24,9 @@ def create_co_views(data):
     return co_views.collect()
 
 
+
 if __name__ == '__main__':
     sc = SparkContext("spark://spark-master:7077", "PopularItems")
     data = sc.textFile("/tmp/data/access.log")
     recs = create_co_views(data)
     write_to_db(recs)
-    
