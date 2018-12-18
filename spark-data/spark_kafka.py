@@ -6,7 +6,6 @@ import json
 es = Elasticsearch(['es'])
 
 with open("/app/access.log", "a") as log:
-    log.write("\n{}\t{}".format(1,1))
     kafka_starting = True
     while kafka_starting:
         try:
@@ -17,5 +16,5 @@ with open("/app/access.log", "a") as log:
 
     for message in consumer:
         pair = json.loads((message.value).decode('utf-8'))
-        log.write("\n{}\t{}".format(pair["user_id"], pair["item_id"]))
+        log.write("\n{}\t{}\t{}".format(pair["user_id"], pair["item_id"], pair["time"]))
         log.flush()

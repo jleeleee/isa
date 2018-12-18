@@ -8,6 +8,7 @@ from .utils import send_data_to_models
 import urllib.request
 import urllib.parse
 import json
+import time
 
 from kafka import KafkaProducer
 
@@ -54,10 +55,9 @@ def listing(request, _id):
     except (urllib.error.HTTPError, KeyError) as e:
         reviews = []
 
-    print(listing)
     if "user_id" in request.POST:
         producer = KafkaProducer(bootstrap_servers='kafka:9092')
-        producer.send('recommendations', json.dumps({"user_id": request.POST["user_id"], "item_id": _id}).encode('utf-8'))
+        producer.send('recommendations', json.dumps({"user_id": request.POST["user_id"], "item_id": _id, "time": time.time()}).encode('utf-8'))
 
     return JsonResponse({
         "ok": True,
