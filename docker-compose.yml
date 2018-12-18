@@ -166,3 +166,13 @@ services:
       - 8081:8081
     volumes:
       - ./spark-data:/tmp/data
+
+  spark-batch:
+    image: tp33/django
+    container_name: spark-batch
+    network_mode: default
+    volumes:
+      - ./spark-data:/app
+    links:
+      - kafka:kafka
+    command: python /app/spark_kafka.py
