@@ -140,7 +140,7 @@ def recommendations(request, id_):
     cursor.execute("SELECT Recos FROM recommendations WHERE Page={}".format(id_))
 
     res = cursor.fetchone()
-    if len(res) == 0:
+    if res is None or len(res) == 0:
         return JsonResponse({
             "ok": True,
             "result": []
