@@ -17,3 +17,7 @@ p {
 .center {
     text-align: center;
 }
+
+html, body {
+    margin-bottom: 5px;
+}
