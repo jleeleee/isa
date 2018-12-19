@@ -20,7 +20,7 @@ def write_to_db(data):
             cmd = "INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\") ON DUPLICATE KEY UPDATE Recos=\"{}\"".format(entry[0], entry[1], entry[1])
             print("Executing: {}".format(cmd))
             cursor.execute(cmd)
-            f.write("%s\n", cmd)
+            f.write("{}\n".format(cmd))
 
     print("Committing")
     db.commit()
