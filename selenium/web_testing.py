@@ -78,6 +78,12 @@ class SampleTest(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
+    def test_recommendation(self):
+        driver = self.driver
+        driver.get('http://web:8000/listings/1')
+        
+        
+
 if __name__ == "__main__":
     sleep(5)
     unittest.main(warnings='ignore')

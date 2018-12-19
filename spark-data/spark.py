@@ -27,7 +27,7 @@ def create_co_views(data):
     pairs = data.map(lambda line: line.split(","))
     pairs = pairs.map(lambda x: (x[0], ( x[1], x[2] )))
     # Form co-view pairs ((lid1, lid2), uid)
-    user_coviews = pairs.join(pairs).filter(lambda x: x[1][0][1] < x[1][1][1])
+    user_coviews = pairs.join(pairs).filter(lambda x: x[1][0][1] < x[1][1][1]).filter(lambda x: x[1][0][0] != x[1][1][0])
     co_views = user_coviews.map(lambda x: ((x[1][0][0], x[1][1][0]), x[0]))
     # Group by pairs ((lid1, lid2), # of unique uids), only for those with more than 3 uids
     co_views = co_views.groupByKey().map(lambda x: (x[0], len(x[1]))).filter(lambda x: x[1] >= 3)
