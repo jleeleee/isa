@@ -20,12 +20,16 @@ def write_to_db(data):
 
 
 def create_co_views(data):
+    # Form (uid, (lid, date)) keyed by the user ID
     pairs = data.map(lambda line: line.split(","))
     pairs = pairs.map(lambda x: (x[0], ( x[1], x[2] )))
+    # Form co-view pairs ((lid1, lid2), uid)
     user_coviews = pairs.join(pairs).filter(lambda x: x[1][0][1] < x[1][1][1])
     co_views = user_coviews.map(lambda x: ((x[1][0][0], x[1][1][0]), x[0]))
-    co_views = co_views.groupByKey().map(lambda x: (x[0], len(x[1])))#.filter(lambda x: x[1] >= 3)
+    # Group by pairs ((lid1, lid2), # of unique uids), only for those with more than 3 uids
+    co_views = co_views.groupByKey().map(lambda x: (x[0], len(x[1]))).filter(lambda x: x[1] >= 3)
     views = co_views.map(lambda x: (x[0][0], x[0][1])).groupByKey()
+    # Convert to (lid1, recommendations for lid)
     views = views.map(lambda y: ( y[0], ", ".join(list(y[1])) )).collect()
 
     return views
