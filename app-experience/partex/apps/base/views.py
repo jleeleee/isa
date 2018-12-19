@@ -58,7 +58,7 @@ def listing(request, _id):
     try:
         req = urllib.request.Request("http://models:8000/api/v1/listings/{}/recommendations".format(_id))
         resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-        recos = json.loads(resp_json)
+        recos = json.loads(resp_json)["result"]
 
     except urllib.error.HTTPError as e:
         return JsonResponse({

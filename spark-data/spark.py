@@ -8,12 +8,15 @@ def write_to_db(data):
     db = MySQLdb.connect("db", "www", "$3cureUS", "cs4501")
     cursor = db.cursor()
     cursor.execute("USE cs4501")
-    cursor.execute("""
-        CREATE TABLE recommendations (
-            Page int not null,
-            Recos varchar(255)
-        )
-    """)
+    try:
+        cursor.execute("""
+            CREATE TABLE recommendations (
+                Page int not null,
+                Recos varchar(255)
+            )
+        """)
+    except Exception as e:
+        print("{}".format(e))
     for entry in data:
         cursor.execute("INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\")".format(entry[0], entry[1]))
     db.commit()

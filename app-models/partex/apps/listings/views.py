@@ -139,8 +139,19 @@ def recommendations(request, id_):
 
     cursor.execute("SELECT Recos FROM recommendations WHERE Page={}".format(id_))
 
-    return JsonResponse({
-        "ok": True,
-        "result": "{}".format(cursor.fetchone())
-        # "result": "{}".format([ r.fetchall() for r in res ])
-    })
+    res = cursor.fetchone()
+    if len(res) == 0:
+        return JsonResponse({
+            "ok": True,
+            "result": []
+        })
+
+    else:
+        ids = list(map(int, res[0].split(",")))
+        listings = Listing.objects.filter(id__in=ids)
+        recos = [ l.get_dict() for l in listings ]
+        return JsonResponse({
+            "ok": True,
+            "ids": ids,
+            "result": recos
+        })
