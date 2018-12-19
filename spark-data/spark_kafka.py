@@ -16,5 +16,6 @@ with open("/app/access.log", "a") as log:
 
     for message in consumer:
         pair = json.loads((message.value).decode('utf-8'))
-        log.write("\n{},{},{}".format(pair["user_id"], pair["item_id"], pair["time"]))
-        log.flush()
+        if pair["user_id"] and not pair["user_id"] == "None":
+            log.write("{},{},{}\n".format(pair["user_id"], pair["item_id"], pair["time"]))
+            log.flush()
