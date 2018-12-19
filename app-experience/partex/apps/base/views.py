@@ -67,7 +67,7 @@ def listing(request, _id):
             "str": "Error in recos: " + str(e)
         })
 
-    if "user_id" in request.POST:
+    if "user_id" in request.POST and not request.POST["user_id"] == None:
         producer = KafkaProducer(bootstrap_servers='kafka:9092')
         producer.send('recommendations', json.dumps({"user_id": request.POST["user_id"], "item_id": _id, "time": time.time()}).encode('utf-8'))
 
