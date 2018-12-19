@@ -29,7 +29,8 @@ def write_to_db(data):
 
 def create_co_views(data):
     # Form (uid, (lid, date)) keyed by the user ID
-    pairs = data.map(lambda line: line.split(","))
+    pairs = data.map(lambda line: line.split(",")).filter(lambda x: len(x) == 3)
+    pairs = pairs.filter(lambda x: x[0] != "None")
     pairs = pairs.map(lambda x: (x[0], ( x[1], x[2] )))
     # Form co-view pairs ((lid1, lid2), uid)
     user_coviews = pairs.join(pairs).filter(lambda x: x[1][0][1] < x[1][1][1]).filter(lambda x: x[1][0][0] != x[1][1][0])
