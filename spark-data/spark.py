@@ -15,10 +15,12 @@ def write_to_db(data):
         """)
     except Exception as e:
         print("{}".format(e))
-    for entry in data:
-        cmd = "INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\") ON DUPLICATE KEY UPDATE Recos=\"{}\"".format(entry[0], entry[1], entry[1])
-        print("Executing: {}".format(cmd))
-        cursor.execute(cmd)
+    with open("/tmp/data/output.log", 'w') as f:
+        for entry in data:
+            cmd = "INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\") ON DUPLICATE KEY UPDATE Recos=\"{}\"".format(entry[0], entry[1], entry[1])
+            print("Executing: {}".format(cmd))
+            cursor.execute(cmd)
+            f.write("%s\n", cmd)
 
     print("Committing")
     db.commit()
