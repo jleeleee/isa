@@ -81,8 +81,8 @@ class SampleTest(unittest.TestCase):
     def test_recommendation(self):
         driver = self.driver
         driver.get('http://web:8000/listings/1')
-        
-        
+        results = self.driver.find_elements_by_class_name("recommendation")
+        self.assertEqual(len(results), 2) # 1 should have 2 recommendations with default data
 
 if __name__ == "__main__":
     sleep(5)
