@@ -127,6 +127,7 @@ services:
     environment:
       MASTER: spark://spark-master:7077
       SPARK_CONF_DIR: /conf
+    network_mode: default
     external_links:
       - mysql:db
     expose:
@@ -157,6 +158,7 @@ services:
       SPARK_WORKER_MEMORY: 512m
       SPARK_WORKER_PORT: 8881
       SPARK_WORKER_WEBUI_PORT: 8081
+    network_mode: default
     links:
       - spark-master
     expose:
