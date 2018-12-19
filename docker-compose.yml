@@ -31,7 +31,7 @@ services:
     command: python /batch/kafka_to_es.py
 
   models:
-    image: tp33/django
+    build: app-models/
     container_name: models
     network_mode: default
     external_links:

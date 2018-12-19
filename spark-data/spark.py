@@ -12,6 +12,7 @@ def write_to_db(data):
         )
     """)
     cursor.execute("INSERT INTO recommendations(Page, Recos) VALUES ({}, {})".format(data))
+    db.commit()
 
 
 def create_co_views(data):

@@ -55,6 +55,18 @@ def listing(request, _id):
     except (urllib.error.HTTPError, KeyError) as e:
         reviews = []
 
+    try:
+        req = urllib.request.Request("http://models:8000/api/v1/listings/{}/recommendations".format(_id))
+        resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+        recos = json.loads(resp_json)
+
+    except urllib.error.HTTPError as e:
+        return JsonResponse({
+            "ok": False,
+            "error": "Error in recos: " + str(e.reason),
+            "str": "Error in recos: " + str(e)
+        })
+
     if "user_id" in request.POST:
         producer = KafkaProducer(bootstrap_servers='kafka:9092')
         producer.send('recommendations', json.dumps({"user_id": request.POST["user_id"], "item_id": _id, "time": time.time()}).encode('utf-8'))
@@ -63,7 +75,7 @@ def listing(request, _id):
         "ok": True,
         "listing": listing["result"],
         "reviews": reviews,
-        "recommendations": [listing["result"]]
+        "recommendations": recos
     })
 
 def all_listings(request):

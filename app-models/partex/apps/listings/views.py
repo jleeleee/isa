@@ -8,6 +8,8 @@ from ...utils import required_fields
 from .models import Listing
 from ..users.models import User
 
+import MySQLdb
+
 # Create your views here.
 
 def index(request):
@@ -129,4 +131,16 @@ def get_three_listings(request):
     return JsonResponse({
         "ok": True,
         "result": [l.get_dict() for l in three_most_recent_listings]
+    })
+
+def recommendations(request, id_):
+    db = MySQLdb.connect("db", "www", "$3cureUS", "cs4501")
+    cursor = db.cursor()
+
+    cursor.execute("SELECT Recos FROM recommendations WHERE Page={}".format(id_))
+
+    return JsonResponse({
+        "ok": True,
+        "result": "{}".format(cursor.fetchone())
+        # "result": "{}".format([ r.fetchall() for r in res ])
     })
