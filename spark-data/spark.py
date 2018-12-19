@@ -2,9 +2,6 @@ from pyspark import SparkContext
 import MySQLdb
 import sys
 def write_to_db(data):
-    for entry in data:
-        print("INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\")".format(entry[0], entry[1]))
-
     db = MySQLdb.connect("db", "www", "$3cureUS", "cs4501")
     cursor = db.cursor()
     cursor.execute("USE cs4501")
@@ -12,14 +9,20 @@ def write_to_db(data):
         cursor.execute("""
             CREATE TABLE recommendations (
                 Page int not null,
-                Recos varchar(255)
+                Recos varchar(255),
+                PRIMARY KEY(Page)
             )
         """)
     except Exception as e:
         print("{}".format(e))
     for entry in data:
-        cursor.execute("INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\")".format(entry[0], entry[1]))
+        cmd = "INSERT INTO recommendations(Page, Recos) VALUES ({}, \"{}\") ON DUPLICATE KEY UPDATE Recos=\"{}\"".format(entry[0], entry[1], entry[1])
+        print("Executing: {}".format(cmd))
+        cursor.execute(cmd)
+
+    print("Committing")
     db.commit()
+    db.close()
 
 
 def create_co_views(data):
